@@ -5,6 +5,10 @@ VisualStudioVersion = 17.9.34714.143
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeautyCoursesPlace", "BeautyCoursesPlace\BeautyCoursesPlace.csproj", "{8A0D9A0F-C098-41D1-A6C0-C692DDE5EB5E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeautyCoursesPlace.Core", "BeautyCoursesPlace.Core\BeautyCoursesPlace.Core.csproj", "{8C28E710-8A45-4AAF-8DE1-CA4F022676BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeautyCoursesPlace.Infrastructure", "BeautyCoursesPlace.Infrastructure\BeautyCoursesPlace.Infrastructure.csproj", "{CA8C0C5D-CA63-4EF8-83CE-AEC67EF93B6C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{8A0D9A0F-C098-41D1-A6C0-C692DDE5EB5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A0D9A0F-C098-41D1-A6C0-C692DDE5EB5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A0D9A0F-C098-41D1-A6C0-C692DDE5EB5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C28E710-8A45-4AAF-8DE1-CA4F022676BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C28E710-8A45-4AAF-8DE1-CA4F022676BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C28E710-8A45-4AAF-8DE1-CA4F022676BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C28E710-8A45-4AAF-8DE1-CA4F022676BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA8C0C5D-CA63-4EF8-83CE-AEC67EF93B6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA8C0C5D-CA63-4EF8-83CE-AEC67EF93B6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA8C0C5D-CA63-4EF8-83CE-AEC67EF93B6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA8C0C5D-CA63-4EF8-83CE-AEC67EF93B6C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
