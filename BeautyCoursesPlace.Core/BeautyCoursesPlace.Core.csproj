@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BeautyCoursesPlace.Infrastructure\BeautyCoursesPlace.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

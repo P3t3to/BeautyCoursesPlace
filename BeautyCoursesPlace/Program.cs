@@ -1,4 +1,4 @@
-using BeautyCoursesPlace.Data;
+using BeautyCoursesPlace.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
