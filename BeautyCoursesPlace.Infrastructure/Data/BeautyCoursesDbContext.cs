@@ -11,6 +11,23 @@ namespace BeautyCoursesPlace.Infrastructure.Data
         {
         }
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+           builder.Entity<Course>()
+                .HasOne(c =>c.Category)
+                .WithMany(c=>c.Courses)
+                .HasForeignKey(c => c.CategoryId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Course>()
+            .HasOne(c=>c.Lector)
+            .WithMany(c => c.Courses)
+            .HasForeignKey(c => c.LectorId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+            base.OnModelCreating(builder);
+        }
+
         public DbSet<Course> Courses { get; set; } = null!;
 
         public DbSet<Category> Categories { get; set; } = null!;

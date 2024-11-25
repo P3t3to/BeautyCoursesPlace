@@ -30,6 +30,8 @@ namespace BeautyCoursesPlace.Infrastructure.Data.Models
         [ForeignKey(nameof(UserId))]
         public IdentityUser User { get; set; } = null!;
 
+        public List<Course> Courses { get; set; } = new List<Course>();
+
 
 
 
