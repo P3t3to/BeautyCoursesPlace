@@ -26,5 +26,15 @@ namespace BeautyCoursesPlace.Infrastructure.Constants
 
         public const int TelephoneMaxLength = 15;
         public const int TelephoneMinLength = 10;
+
+
+        //Partner
+        public const int PartnerNameMaxLength = 30;
+        public const int PartnerNamMinLength = 5;
+
+        //Saloon
+        public const int SaloonNameMaxLength = 30;
+        public const int SaloonNamMinLength = 5;
+
     }
 }

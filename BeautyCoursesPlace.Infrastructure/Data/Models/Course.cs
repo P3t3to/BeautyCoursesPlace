@@ -61,5 +61,12 @@ namespace BeautyCoursesPlace.Infrastructure.Data.Models
         public string? StudentId { get; set; }
 
 
+        [Comment("Identifier for partner")]
+        public int PartnerId { get; set; }
+
+        [ForeignKey(nameof(PartnerId))]
+        public Partner Partner { get; set; } = null!;
+
+
     }
 }

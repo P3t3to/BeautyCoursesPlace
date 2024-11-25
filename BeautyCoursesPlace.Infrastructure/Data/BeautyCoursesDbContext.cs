@@ -17,5 +17,12 @@ namespace BeautyCoursesPlace.Infrastructure.Data
 
 
         public DbSet<Lector> Lectors { get; set; } = null!;
+
+
+        public DbSet<Partner> Partners { get; set; } = null!;
+
+        public DbSet<Saloon> Saloons { get; set; } = null!;
+
+
     }
 }
