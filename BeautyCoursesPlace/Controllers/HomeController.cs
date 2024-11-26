@@ -1,3 +1,4 @@
+using BeautyCoursesPlace.Core.Models.Home;
 using BeautyCoursesPlace.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -10,12 +11,14 @@ namespace BeautyCoursesPlace.Controllers
 
         public HomeController(ILogger<HomeController> logger)
         {
+
             _logger = logger;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var model = new IndexViewModel();
+            return View(model);
         }
 
       
