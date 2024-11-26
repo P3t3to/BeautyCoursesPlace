@@ -62,7 +62,7 @@ namespace BeautyCoursesPlace.Infrastructure.Data.Models
 
 
         [Comment("Identifier for partner")]
-        public int PartnerId { get; set; }
+        public int? PartnerId { get; set; } = null!;
 
         [ForeignKey(nameof(PartnerId))]
         public Partner Partner { get; set; } = null!;

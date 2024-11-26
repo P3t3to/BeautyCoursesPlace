@@ -11,7 +11,7 @@ namespace BeautyCoursesPlace.Infrastructure.Constants
         
         public const int NameMaxLength = 50;
 
-        public const int TitleMaxLength = 30;
+        public const int TitleMaxLength = 50;
         public const int TitleMinLength = 5;
 
 
