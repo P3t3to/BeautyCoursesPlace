@@ -1,7 +1,9 @@
-﻿using BeautyCoursesPlace.Core.Contracts;
+﻿using BeautyCoursesPlace.Attributes;
+using BeautyCoursesPlace.Core.Contracts;
 using BeautyCoursesPlace.Core.Models.Lector;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using static BeautyCoursesPlace.Core.Constants.MessageConstants;
 
 namespace BeautyCoursesPlace.Controllers
 {
@@ -15,21 +17,38 @@ namespace BeautyCoursesPlace.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Become()
+        [NotLector]
+        public IActionResult Become()
         {
-            if (await lectorService.ExistByIdAsync(User.Id()))
-            {
-                return BadRequest("You are already registered as a lecturer.");
-            }
-
+           
             var model = new BecomeLectorFormModel();
 
             return View(model);
         }
 
         [HttpPost]
+        [NotLector]
         public async Task<IActionResult> Become(BecomeLectorFormModel model)
         {
+            if(await lectorService.ClientPhoneNumberExistAsync(User.Id()))
+
+            {
+                ModelState.AddModelError(nameof(model.PhoneNumber), TelephoneAlreadyRegistered);
+
+            }
+
+            if(await lectorService.ClientSignInAsync(User.Id())) 
+            {
+                ModelState.AddModelError("Error", SignInCourse);
+
+            }
+
+            await lectorService.InitiateAsync(User.Id(), model.PhoneNumber);
+
+            if (ModelState.IsValid ==false)
+            {
+                return View(model);
+            }
             return RedirectToAction(nameof(CourseController.All), "Course");
         }
     }
