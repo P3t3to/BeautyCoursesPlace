@@ -19,7 +19,7 @@ namespace BeautyCoursesPlace.Core.Services
             repository = _repository;
 
         }
-        public async Task<IEnumerable<CourseIndexServiceModel>> LastThreeCourses()
+        public async Task<IEnumerable<CourseIndexServiceModel>> LastThreeCoursesAsync()
         {
             return await repository
                 .AllReadOnly<Infrastructure.Data.Models.Course>()

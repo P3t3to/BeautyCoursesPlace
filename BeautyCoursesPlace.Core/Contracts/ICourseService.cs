@@ -9,6 +9,6 @@ namespace BeautyCoursesPlace.Core.Contracts
 {
     public interface ICourseService
     {
-        Task<IEnumerable<CourseIndexServiceModel>> LastThreeCourses();
+        Task<IEnumerable<CourseIndexServiceModel>> LastThreeCoursesAsync();
     }
 }

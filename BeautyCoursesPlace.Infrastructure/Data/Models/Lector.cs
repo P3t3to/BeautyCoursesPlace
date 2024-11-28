@@ -11,6 +11,7 @@ using static BeautyCoursesPlace.Infrastructure.Constants.DataConstants;
 
 namespace BeautyCoursesPlace.Infrastructure.Data.Models
 {
+    [Index(nameof(Telephone),IsUnique =true)]
     [Comment("Lector")]
     public class Lector
     {

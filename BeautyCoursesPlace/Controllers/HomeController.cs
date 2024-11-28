@@ -23,7 +23,7 @@ namespace BeautyCoursesPlace.Controllers
         public async Task<IActionResult> Index()
         {
 
-            var model = await courseService.LastThreeCourses();
+            var model = await courseService.LastThreeCoursesAsync();
             return View(model);
         }
 
