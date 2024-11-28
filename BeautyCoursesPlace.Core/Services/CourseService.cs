@@ -1,4 +1,4 @@
-﻿using BeautyCoursesPlace.Core.Contracts.Course;
+﻿using BeautyCoursesPlace.Core.Contracts;
 using BeautyCoursesPlace.Core.Models.Home;
 using BeautyCoursesPlace.Infrastructure.Data.Common;
 using Microsoft.EntityFrameworkCore;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BeautyCoursesPlace.Core.Services.Course
+namespace BeautyCoursesPlace.Core.Services
 {
     public class CourseService : ICourseService
     {
@@ -28,8 +28,8 @@ namespace BeautyCoursesPlace.Core.Services.Course
                 .Select(c => new CourseIndexServiceModel()
                 {
                     Id = c.Id,
-                    ImageUrl=c.ImageUrl,
-                    Title=c.Title,
+                    ImageUrl = c.ImageUrl,
+                    Title = c.Title,
 
                 }).ToListAsync();
         }

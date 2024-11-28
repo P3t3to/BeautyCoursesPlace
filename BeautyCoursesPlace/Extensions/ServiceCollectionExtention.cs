@@ -1,5 +1,5 @@
-﻿using BeautyCoursesPlace.Core.Contracts.Course;
-using BeautyCoursesPlace.Core.Services.Course;
+﻿using BeautyCoursesPlace.Core.Contracts;
+using BeautyCoursesPlace.Core.Services;
 using BeautyCoursesPlace.Infrastructure.Data;
 using BeautyCoursesPlace.Infrastructure.Data.Common;
 using Microsoft.AspNetCore.Identity;
@@ -12,6 +12,7 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddApplicationService(this IServiceCollection services)
         {
             services.AddScoped<ICourseService, CourseService>();
+            services.AddScoped<ILectorService, LectorService>();
             return services;
         }
 
