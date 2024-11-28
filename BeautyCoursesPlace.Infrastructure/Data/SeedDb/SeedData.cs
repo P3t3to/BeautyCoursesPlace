@@ -109,7 +109,7 @@ namespace BeautyCoursesPlace.Infrastructure.Data.SeedDb
                 Title = "Cut crease tehnique",
                 Address = "17 Lydford Rd London UK",
                 Description = "If you want to learn how to do Half cut crease and create this makeup look, join the course.",
-                ImageUrl = "https://www.pinterest.com/pin/hair-makeup-nails--258957047313127874/",
+                ImageUrl = "https://artdeco.com/cdn/shop/files/Shop-the-Look-Schminktipp-Cut-Crease_V2-600x600_600x600.jpg?v=1684735658",
                 Cost = 700.00M,
                 CategoryId = MakeupCategory.Id,
                 LectorId = Lector.Id,
@@ -122,7 +122,7 @@ namespace BeautyCoursesPlace.Infrastructure.Data.SeedDb
                 Title = "Hair Styling: Blow-Dry, Cut, and Colour Like a Pro",
                 Address = "  77 Sidmouth Rd London, England",
                 Description = "This course covers several methods for professionally blow-drying, curling, trimming, and colouring hair.",
-                ImageUrl = "https://www.shutterstock.com/image-photo/stylist-using-hair-brush-dryer-bright-2442221183",
+                ImageUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSY16nniu9WfRnBZisa1BKW5ss9sHlx2blUeg&s",
                 Cost = 400.00M,
                 CategoryId = HairCategory.Id,
                 LectorId = Lector.Id
@@ -134,7 +134,7 @@ namespace BeautyCoursesPlace.Infrastructure.Data.SeedDb
                 Title = "Nail Care and Treatment ",
                 Address = "290 Willesden Lane London, England",
                 Description = "Learn how to care for nails like a pro and perform treatments like manicures and pedicures in this free online course.",
-                ImageUrl = "https://www.gettyimages.com/detail/photo/young-woman-painting-fingernails-close-up-royalty-free-image/DA20814?adppopup=true",
+                ImageUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSE0LHapGysMlndotyOkN0h4T4RynF7P_xJEA&s",
                 Cost = 2000.00M,
                 CategoryId = NailsCategory.Id,
                 LectorId = Lector.Id
