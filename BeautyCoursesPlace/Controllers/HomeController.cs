@@ -1,13 +1,12 @@
-using BeautyCoursesPlace.Core.Contracts.Course;
-using BeautyCoursesPlace.Core.Models.Home;
-using BeautyCoursesPlace.Core.Services.Course;
+using BeautyCoursesPlace.Core.Contracts;
 using BeautyCoursesPlace.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace BeautyCoursesPlace.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ICourseService courseService;
@@ -20,6 +19,7 @@ namespace BeautyCoursesPlace.Controllers
             courseService = _courseService;
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
 
@@ -27,8 +27,8 @@ namespace BeautyCoursesPlace.Controllers
             return View(model);
         }
 
-      
 
+        [AllowAnonymous]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

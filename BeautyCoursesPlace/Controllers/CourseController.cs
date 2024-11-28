@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BeautyCoursesPlace.Controllers
 {
-    [Authorize]
-    public class CourseController : Controller
+    
+    public class CourseController : BaseController
     {
         [AllowAnonymous]
         [HttpGet]
