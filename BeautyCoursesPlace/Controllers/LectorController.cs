@@ -30,7 +30,7 @@ namespace BeautyCoursesPlace.Controllers
         [NotLector]
         public async Task<IActionResult> Become(BecomeLectorFormModel model)
         {
-            if(await lectorService.ClientPhoneNumberExistAsync(User.Id()))
+            if(await lectorService.ClientPhoneNumberExistAsync(model.PhoneNumber))
 
             {
                 ModelState.AddModelError(nameof(model.PhoneNumber), TelephoneAlreadyRegistered);
