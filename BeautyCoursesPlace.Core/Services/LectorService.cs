@@ -38,6 +38,12 @@ namespace BeautyCoursesPlace.Core.Services
                 .AnyAsync(l => l.UserId == userid);
         }
 
+        public async Task<int?> GiveLectorIdAsync(string userId)
+        {
+            return (await repository.AllReadOnly<Lector>()
+                .FirstOrDefaultAsync(l => l.UserId == userId))?.Id;
+        }
+
         public async Task InitiateAsync(string userId, string phoneNumber)
         {
             await repository.AddAsync(new Lector()

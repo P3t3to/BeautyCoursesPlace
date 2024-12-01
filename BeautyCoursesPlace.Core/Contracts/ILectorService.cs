@@ -15,5 +15,7 @@ namespace BeautyCoursesPlace.Core.Contracts
         Task<bool> ClientSignInAsync(string userId);
 
         Task InitiateAsync(string userId, string phoneNumber);
+
+        Task <int?> GiveLectorIdAsync(string userId);
     }
 }

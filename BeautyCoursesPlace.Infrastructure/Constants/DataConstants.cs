@@ -21,8 +21,8 @@ namespace BeautyCoursesPlace.Infrastructure.Constants
         public const int DescriptionMaxLength = 600;
         public const int DescriptionMinLength = 50;
 
-        public const string CoursesCostMaxLength = "5000.00";
-        public const string CoursesCostMinLength = "0.00";
+        public const string CoursesCostMaxLength = "5000";
+        public const string CoursesCostMinLength = "0";
 
         public const int TelephoneMaxLength = 15;
         public const int TelephoneMinLength = 10;

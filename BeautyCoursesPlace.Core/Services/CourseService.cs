@@ -1,6 +1,8 @@
 ﻿using BeautyCoursesPlace.Core.Contracts;
+using BeautyCoursesPlace.Core.Models.Course;
 using BeautyCoursesPlace.Core.Models.Home;
 using BeautyCoursesPlace.Infrastructure.Data.Common;
+using BeautyCoursesPlace.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -19,6 +21,25 @@ namespace BeautyCoursesPlace.Core.Services
             repository = _repository;
 
         }
+
+        public async Task<IEnumerable<CourseCategoryServiceModel>> AllCategoryAsync()
+        {
+            return await repository.AllReadOnly<Category>()
+                .Select(c => new CourseCategoryServiceModel()
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+
+                })
+                .ToListAsync();
+        }
+
+        public async Task<bool> CategoryCreatedAsync(int categoryId)
+        {
+            return await repository.AllReadOnly<Category>()
+                .AnyAsync(c => c.Id == categoryId);
+        }
+
         public async Task<IEnumerable<CourseIndexServiceModel>> LastThreeCoursesAsync()
         {
             return await repository
@@ -32,6 +53,27 @@ namespace BeautyCoursesPlace.Core.Services
                     Title = c.Title,
 
                 }).ToListAsync();
+        }
+
+        public async Task<int> MakeOnAsync(CourseFormModel model, int lectorId)
+        {
+            Course course = new Course()
+            {
+                Address= model.Address,
+                LectorId=lectorId,
+                CategoryId=model.CategoryId,
+                Description=model.Description,
+                ImageUrl=model.ImageUrl,
+                Title=model.Title,
+                Cost=model.Cost,
+
+
+            };
+
+            await repository.AddAsync(course);
+            await repository.SaveChangesAsync();
+
+            return course.Id;
         }
     }
 }

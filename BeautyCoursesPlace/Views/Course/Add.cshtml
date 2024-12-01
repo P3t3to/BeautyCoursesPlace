@@ -1,9 +1,17 @@
 ﻿@model CourseFormModel
 
 @{
-    ViewData["Title"] = "Add Course";
+    ViewData["Title"] = "Add Beauty Course ";
 }
 
-<h2 class="text-center">@ViewData["Title"]</h2>
+<h2 class="text-center" style="color: pink; font-style: italic;">@ViewData["Title"]</h2>
 <hr />
 
+
+
+<partial name="_CourseFormPartial" model="@Model"/>
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial"/>
+}

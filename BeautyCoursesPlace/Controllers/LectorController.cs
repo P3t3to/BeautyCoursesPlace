@@ -43,12 +43,14 @@ namespace BeautyCoursesPlace.Controllers
 
             }
 
-            await lectorService.InitiateAsync(User.Id(), model.PhoneNumber);
-
+            
             if (ModelState.IsValid ==false)
             {
                 return View(model);
             }
+
+            await lectorService.InitiateAsync(User.Id(), model.PhoneNumber);
+
             return RedirectToAction(nameof(CourseController.All), "Course");
         }
     }
