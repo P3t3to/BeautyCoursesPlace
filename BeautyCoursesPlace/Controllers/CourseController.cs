@@ -28,10 +28,23 @@ namespace BeautyCoursesPlace.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> All([FromQuery]AllCoursesQueryModel query)
         {
-            var model = new AllCoursesQueryModel();
-            return View(model);
+            var model = await courseService.AllAsync(
+                query.Category,
+                query.SearchItem,
+                query.Sorting,
+                query.CurrentPage,
+                query.CoursesPerPage
+                );
+
+
+            query.TotalCoursesCount = model.TotalCoursesCount;
+            query.Courses = model.Courses;
+            query.Categories = await courseService.AllCategoriesNameAsync();
+
+
+            return View(query);
         }
 
         [HttpGet]

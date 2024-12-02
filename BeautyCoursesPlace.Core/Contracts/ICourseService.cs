@@ -1,4 +1,5 @@
-﻿using BeautyCoursesPlace.Core.Models.Course;
+﻿using BeautyCoursesPlace.Core.Enums;
+using BeautyCoursesPlace.Core.Models.Course;
 using BeautyCoursesPlace.Core.Models.Home;
 using System;
 using System.Collections.Generic;
@@ -17,5 +18,13 @@ namespace BeautyCoursesPlace.Core.Contracts
         Task<bool> CategoryCreatedAsync(int categoryId);
 
         Task<int> MakeOnAsync(CourseFormModel model, int lectorId);
+
+        Task<CourseQueryServiceModel> AllAsync(string? category = null,
+                                          string ? searchTime = null,
+                                          CourseSorting sorting = CourseSorting.Newest,
+                                          int currentPage = 1,
+                                          int coursesPerPage = 1);
+
+        Task<IEnumerable<string>> AllCategoriesNameAsync();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using BeautyCoursesPlace.Core.Contracts;
+using BeautyCoursesPlace.Core.Enums;
 using BeautyCoursesPlace.Core.Models.Course;
 using BeautyCoursesPlace.Core.Models.Home;
 using BeautyCoursesPlace.Infrastructure.Data.Common;
@@ -20,6 +21,67 @@ namespace BeautyCoursesPlace.Core.Services
         {
             repository = _repository;
 
+        }
+
+        public async Task<CourseQueryServiceModel> AllAsync(string? category = null, string? searchTime = null, CourseSorting sorting = CourseSorting.Newest, int currentPage = 1, int coursesPerPage = 1)
+        {
+            var coursesToDisplay = repository.AllReadOnly<Course>();
+
+            if (category != null)
+            {
+                coursesToDisplay = coursesToDisplay
+                    .Where(c => c.Category.Name == category);
+            }
+
+            if (searchTime != null )
+            {
+
+                string normalizedSearchTime = searchTime.ToLower();
+
+                coursesToDisplay = coursesToDisplay
+                    .Where(c => (c.Title.ToLower().Contains(normalizedSearchTime)  ||
+                              c.Address.ToLower().Contains(normalizedSearchTime) ||
+                              c.Description.ToLower().Contains(normalizedSearchTime)));
+            }
+
+            coursesToDisplay = sorting switch
+            {
+                CourseSorting.Price=> coursesToDisplay.OrderBy(c=>c.Cost),
+                CourseSorting.FistSignIn=> coursesToDisplay.OrderBy(c=>c.StudentId !=null).ThenByDescending(c=>c.Id),
+                 _ =>coursesToDisplay.OrderByDescending(c => c.Id),
+            };
+
+
+            var courses = await coursesToDisplay
+                .Skip((currentPage - 1) * coursesPerPage)
+                .Take(coursesPerPage)
+                .Select(c => new CourseServiceModel()
+                {
+                    Id=c.Id,
+                    Address=c.Address,
+                    ImageUrl=c.ImageUrl,
+                    IsSignIn = c.StudentId !=null,
+                    CostCourse=c.Cost,
+                    Title=c.Title
+
+
+                }).ToListAsync();
+
+            int totalCourses= await coursesToDisplay.CountAsync();
+
+            return new CourseQueryServiceModel()
+            {
+                Courses = courses,
+                TotalCoursesCount = totalCourses
+            };
+        }
+
+        public async Task<IEnumerable<string>> AllCategoriesNameAsync()
+        {
+           return await repository.AllReadOnly<Category>()
+               .Select(c=>c.Name)
+               .Distinct()
+               .ToListAsync();
         }
 
         public async Task<IEnumerable<CourseCategoryServiceModel>> AllCategoryAsync()

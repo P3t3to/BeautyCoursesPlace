@@ -39,6 +39,22 @@ button.accept-policy {
   line-height: inherit;
 }
 
+/*.btn-pink {
+    background-color: #ff69b4;*/ /* Розов фон */
+    /*color: black;*/ /* Бял текст */
+    /*border: none;*/ /* Без рамка */
+    /*padding: 10px 20px;*/ /* Вътрешно разстояние */
+    /*border-radius: 5px;*/ /* Закръглени ръбове */
+    /*text-transform: uppercase;*/ /* Горно регистър */
+    /*transition: all 0.3s ease;*/ /* Ефект при hover */
+/*}*/
+
+    /*.btn-pink:hover {
+        background-color: #ff1493;*/ /* По-тъмен розов при hover */
+        /*color: white;*/ /* Запазваме бял текст */
+    
+
+
 .footer {
   position: absolute;
   bottom: 0;
@@ -46,3 +62,4 @@ button.accept-policy {
   white-space: nowrap;
   line-height: 60px;
 }
+
