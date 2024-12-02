@@ -4,6 +4,7 @@ using BeautyCoursesPlace.Core.Models.Course;
 using BeautyCoursesPlace.Core.Models.Home;
 using BeautyCoursesPlace.Infrastructure.Data.Common;
 using BeautyCoursesPlace.Infrastructure.Data.Models;
+using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -33,41 +34,32 @@ namespace BeautyCoursesPlace.Core.Services
                     .Where(c => c.Category.Name == category);
             }
 
-            if (searchTime != null )
+            if (searchTime != null)
             {
 
                 string normalizedSearchTime = searchTime.ToLower();
 
                 coursesToDisplay = coursesToDisplay
-                    .Where(c => (c.Title.ToLower().Contains(normalizedSearchTime)  ||
+                    .Where(c => (c.Title.ToLower().Contains(normalizedSearchTime) ||
                               c.Address.ToLower().Contains(normalizedSearchTime) ||
                               c.Description.ToLower().Contains(normalizedSearchTime)));
             }
 
             coursesToDisplay = sorting switch
             {
-                CourseSorting.Price=> coursesToDisplay.OrderBy(c=>c.Cost),
-                CourseSorting.FistSignIn=> coursesToDisplay.OrderBy(c=>c.StudentId !=null).ThenByDescending(c=>c.Id),
-                 _ =>coursesToDisplay.OrderByDescending(c => c.Id),
+                CourseSorting.Price => coursesToDisplay.OrderBy(c => c.Cost),
+                CourseSorting.FistSignIn => coursesToDisplay.OrderBy(c => c.StudentId != null).ThenByDescending(c => c.Id),
+                _ => coursesToDisplay.OrderByDescending(c => c.Id),
             };
 
 
             var courses = await coursesToDisplay
                 .Skip((currentPage - 1) * coursesPerPage)
                 .Take(coursesPerPage)
-                .Select(c => new CourseServiceModel()
-                {
-                    Id=c.Id,
-                    Address=c.Address,
-                    ImageUrl=c.ImageUrl,
-                    IsSignIn = c.StudentId !=null,
-                    CostCourse=c.Cost,
-                    Title=c.Title
+                .ProjectCoursesServiceModel()
+                .ToListAsync();
 
-
-                }).ToListAsync();
-
-            int totalCourses= await coursesToDisplay.CountAsync();
+            int totalCourses = await coursesToDisplay.CountAsync();
 
             return new CourseQueryServiceModel()
             {
@@ -78,15 +70,15 @@ namespace BeautyCoursesPlace.Core.Services
 
         public async Task<IEnumerable<string>> AllCategoriesNameAsync()
         {
-           return await repository.AllReadOnly<Category>()
-               .Select(c=>c.Name)
-               .Distinct()
-               .ToListAsync();
+            return await repository.AllReadOnly<Infrastructure.Data.Models.Category>()
+                .Select(c => c.Name)
+                .Distinct()
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<CourseCategoryServiceModel>> AllCategoryAsync()
         {
-            return await repository.AllReadOnly<Category>()
+            return await repository.AllReadOnly<Infrastructure.Data.Models.Category>()
                 .Select(c => new CourseCategoryServiceModel()
                 {
                     Id = c.Id,
@@ -96,10 +88,57 @@ namespace BeautyCoursesPlace.Core.Services
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<CourseServiceModel>> AllCoursesByLectorIdAsync(int lectorId)
+        {
+            return await repository.AllReadOnly<Course>()
+                 .Where(c => c.LectorId == lectorId)
+                 .ProjectCoursesServiceModel()
+                 .ToListAsync();
+        }
+
+        public async Task<IEnumerable<CourseServiceModel>> AllCoursesByUserId(string userId)
+        {
+            return await repository.AllReadOnly<Course>()
+                 .Where(c => c.StudentId == userId)
+                 .ProjectCoursesServiceModel()
+                 .ToListAsync();
+        }
+
         public async Task<bool> CategoryCreatedAsync(int categoryId)
         {
-            return await repository.AllReadOnly<Category>()
+            return await repository.AllReadOnly<Infrastructure.Data.Models.Category>()
                 .AnyAsync(c => c.Id == categoryId);
+        }
+
+        public async Task<CourseDetailServiceModel> CourseDetailsbyIdAsync(int id)
+        {
+            return await repository.AllReadOnly<Course>()
+                 .Where(c => c.Id == id)
+                 .Select(c => new CourseDetailServiceModel()
+                 {
+                     Id= c.Id,
+                     Address= c.Address,
+                     Lector = new Models.Lector.LectorServiceModel()
+                     {
+                         Email=c.Lector.User.Email,
+                         Number=c.Lector.Telephone
+                     },
+                     Category=c.Category.Name,
+                     Description = c.Description,
+                     ImageUrl=c.ImageUrl,
+                     IsSignIn=c.StudentId !=null,
+                     CostCourse=c.Cost,
+                     Title=c.Title,
+
+                 })
+                 .FirstAsync();
+
+        }
+
+        public async Task<bool> ExistAsync(int id)
+        {
+            return await repository.AllReadOnly<Course>()
+                .AnyAsync(c => c.Id == id);
         }
 
         public async Task<IEnumerable<CourseIndexServiceModel>> LastThreeCoursesAsync()
@@ -121,13 +160,13 @@ namespace BeautyCoursesPlace.Core.Services
         {
             Course course = new Course()
             {
-                Address= model.Address,
-                LectorId=lectorId,
-                CategoryId=model.CategoryId,
-                Description=model.Description,
-                ImageUrl=model.ImageUrl,
-                Title=model.Title,
-                Cost=model.Cost,
+                Address = model.Address,
+                LectorId = lectorId,
+                CategoryId = model.CategoryId,
+                Description = model.Description,
+                ImageUrl = model.ImageUrl,
+                Title = model.Title,
+                Cost = model.Cost,
 
 
             };
@@ -137,5 +176,7 @@ namespace BeautyCoursesPlace.Core.Services
 
             return course.Id;
         }
+
+
     }
 }

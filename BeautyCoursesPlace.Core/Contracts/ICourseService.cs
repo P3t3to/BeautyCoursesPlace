@@ -26,5 +26,14 @@ namespace BeautyCoursesPlace.Core.Contracts
                                           int coursesPerPage = 1);
 
         Task<IEnumerable<string>> AllCategoriesNameAsync();
+
+        Task<IEnumerable<CourseServiceModel>> AllCoursesByLectorIdAsync(int lectorId);
+
+        Task<IEnumerable<CourseServiceModel>>AllCoursesByUserId(string userId);
+
+
+        Task<bool>ExistAsync(int id);
+
+        Task<CourseDetailServiceModel> CourseDetailsbyIdAsync(int id);
     }
 }

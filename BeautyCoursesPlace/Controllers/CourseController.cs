@@ -28,37 +28,58 @@ namespace BeautyCoursesPlace.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<IActionResult> All([FromQuery]AllCoursesQueryModel query)
+        public async Task<IActionResult> All([FromQuery]AllCoursesQueryModel model)
         {
-            var model = await courseService.AllAsync(
-                query.Category,
-                query.SearchItem,
-                query.Sorting,
-                query.CurrentPage,
-                query.CoursesPerPage
+            var courses = await courseService.AllAsync(
+                model.Category,
+                model.SearchItem,
+                model.Sorting,
+                model.CurrentPage,
+                model.CoursesPerPage
                 );
 
 
-            query.TotalCoursesCount = model.TotalCoursesCount;
-            query.Courses = model.Courses;
-            query.Categories = await courseService.AllCategoriesNameAsync();
+            model.TotalCoursesCount = courses.TotalCoursesCount;
+            model.Courses = courses.Courses;
+            model.Categories = await courseService.AllCategoriesNameAsync();
 
 
-            return View(query);
+            return View(model);
         }
 
         [HttpGet]
         public async Task<IActionResult> MyCourses()
         {
 
-            var model = new AllCoursesQueryModel();
+            var userId = User.Id();
+
+            IEnumerable<CourseServiceModel> model;
+
+            if (await lectorService.ExistByIdAsync(userId))
+            {
+               int lectorId = await lectorService.GiveLectorIdAsync(userId) ?? 0;
+                model = await courseService.AllCoursesByLectorIdAsync(lectorId);
+            }
+            else
+            {
+
+                model=await courseService.AllCoursesByUserId(userId);
+            }
+            
+
             return View(model);
         }
 
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-            var model = new CourseDetailsViewModel();
+            if (await courseService.ExistAsync(id)==false)
+            {
+                return BadRequest();
+            }
+
+            var model = await courseService.CourseDetailsbyIdAsync(id);
+
             return View(model); 
 
         }
