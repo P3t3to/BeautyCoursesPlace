@@ -104,7 +104,7 @@ namespace BeautyCoursesPlace.Controllers
         {
             if(await courseService.CategoryCreatedAsync(model.CategoryId)==false)
             {
-                ModelState.AddModelError(nameof(model.CategoryId), "");
+                ModelState.AddModelError(nameof(model.CategoryId), "There is not such Category");
             }  
 
             if(ModelState.IsValid==false)
@@ -126,7 +126,19 @@ namespace BeautyCoursesPlace.Controllers
         public async Task<IActionResult> Edit(int id)
         {
 
-          var model = new CourseFormModel();
+            if (await courseService.ExistAsync(id) ==false)
+            {
+                return BadRequest();
+            }
+
+            if (await courseService.HasLectorWithIdAsync(id, User.Id()) == false)
+            {
+                return Unauthorized();
+
+            }
+
+           var model = await courseService.RecieveCourseFormodelAsync(id);
+
             return View(model);
         }
 
@@ -134,7 +146,31 @@ namespace BeautyCoursesPlace.Controllers
         public async Task<IActionResult> Edit(int id, CourseFormModel model)
         {
 
-            return RedirectToAction(nameof(Details), new { id = 1 });
+
+            if (await courseService.ExistAsync(id) == false)
+            {
+                return BadRequest();
+            }
+
+            if (await courseService.HasLectorWithIdAsync(id, User.Id()) == false)
+            {
+                return Unauthorized();
+
+            }
+
+            if (await courseService.CategoryCreatedAsync(model.CategoryId) == false)
+            {
+                ModelState.AddModelError(nameof(model.CategoryId), "There is not such Category");
+            }
+
+            if (ModelState.IsValid==false)
+            {
+                model.Categories = await courseService.AllCategoryAsync();
+                return View(model);
+            }
+
+            await courseService.Edit(id, model);
+            return RedirectToAction(nameof(Details), new {id});
         }
 
         [HttpGet]

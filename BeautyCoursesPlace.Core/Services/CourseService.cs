@@ -135,10 +135,34 @@ namespace BeautyCoursesPlace.Core.Services
 
         }
 
+        public async Task Edit(int courseId, CourseFormModel model)
+        {
+            var course = await repository.GetByIdAsync<Course>(courseId);
+
+
+            if (course != null)
+            {
+                course.Address = model.Address;
+                course.CategoryId = model.CategoryId;
+                course.Description = model.Description;
+                course.ImageUrl = model.ImageUrl;
+                course.Cost=model.Cost;
+                course.Title = model.Title;
+
+                await repository.SaveChangesAsync();
+            }
+        }
+
         public async Task<bool> ExistAsync(int id)
         {
             return await repository.AllReadOnly<Course>()
                 .AnyAsync(c => c.Id == id);
+        }
+
+        public async Task<bool> HasLectorWithIdAsync(int courseId, string userId)
+        {
+            return await repository.AllReadOnly<Course>()
+                .AllAsync(c => c.Id == courseId && c.Lector.UserId == userId);
         }
 
         public async Task<IEnumerable<CourseIndexServiceModel>> LastThreeCoursesAsync()
@@ -177,6 +201,28 @@ namespace BeautyCoursesPlace.Core.Services
             return course.Id;
         }
 
+        public async Task<CourseFormModel?> RecieveCourseFormodelAsync(int id)
+        {
+            var course= await repository.AllReadOnly<Course>()
+                .Where(c=> c.Id == id)
+                .Select(c=> new CourseFormModel()
+                {
+                    Address=c.Address,
+                    CategoryId=c.CategoryId,
+                    Description =c.Description,
+                    ImageUrl=c.ImageUrl,
+                    Cost=c.Cost,
+                    Title=c.Title,
 
+                })
+                .FirstOrDefaultAsync();
+
+            if (course!=null)
+            {
+                course.Categories = await AllCategoryAsync();
+            }
+           
+            return course;
+        }
     }
 }

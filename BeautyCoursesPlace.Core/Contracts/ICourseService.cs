@@ -35,5 +35,11 @@ namespace BeautyCoursesPlace.Core.Contracts
         Task<bool>ExistAsync(int id);
 
         Task<CourseDetailServiceModel> CourseDetailsbyIdAsync(int id);
+
+        Task Edit(int courseId, CourseFormModel model);
+
+        Task<bool> HasLectorWithIdAsync(int courseId, string userId);
+
+        Task<CourseFormModel?> RecieveCourseFormodelAsync(int id);
     }
 }
