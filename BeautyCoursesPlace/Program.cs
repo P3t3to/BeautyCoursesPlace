@@ -1,6 +1,7 @@
 using BeautyCoursesPlace.Infrastructure.Data;
 using BeautyCoursesPlace.ModelBinders;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,6 +14,7 @@ builder.Services.AddApplicationIdentity(builder.Configuration);
 builder.Services.AddControllersWithViews(option =>
 { 
    option.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+    option.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
 });
 
 builder.Services.AddApplicationService();
@@ -39,8 +41,23 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapDefaultControllerRoute();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+      name: "Course Details",
+      pattern: "/Course/Details/{id}/{information}",
+      defaults: new { Controller = "Course", Action = "Details" }
+  );
 
-app.MapRazorPages();
+    endpoints.MapControllerRoute(
+            name: "areas",
+            pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+    );
+
+    endpoints.MapDefaultControllerRoute();
+
+    endpoints.MapRazorPages();
+});
+
 
 await app.RunAsync();

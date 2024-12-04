@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BeautyCoursesPlace.Core.Contracts;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -10,7 +11,7 @@ using static BeautyCoursesPlace.Infrastructure.Constants.DataConstants;
 
 namespace BeautyCoursesPlace.Core.Models.Course
 {
-    public class CourseFormModel
+    public class CourseFormModel:ICourseModel
     {
         public int Id { get; set; }
 

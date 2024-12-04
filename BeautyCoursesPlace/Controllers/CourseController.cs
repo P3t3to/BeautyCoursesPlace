@@ -1,9 +1,11 @@
 ﻿using BeautyCoursesPlace.Attributes;
 using BeautyCoursesPlace.Core.Contracts;
 using BeautyCoursesPlace.Core.Exeptions;
+using BeautyCoursesPlace.Core.Extensions;
 using BeautyCoursesPlace.Core.Models.Course;
 using BeautyCoursesPlace.Core.Services;
 using DocumentFormat.OpenXml.Office2010.Excel;
+using DocumentFormat.OpenXml.Presentation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Office.Interop.Outlook;
@@ -79,14 +81,21 @@ namespace BeautyCoursesPlace.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(int id, string information)
         {
             if (await courseService.ExistAsync(id)==false)
             {
                 return BadRequest();
             }
 
+            
+
             var model = await courseService.CourseDetailsbyIdAsync(id);
+
+            if (information != model.GetInformation())
+            {
+                return BadRequest();
+            }
 
             return View(model); 
 
@@ -127,8 +136,9 @@ namespace BeautyCoursesPlace.Controllers
 
             int newCourseId = await courseService.MakeOnAsync(model, lectorId ?? 0);
 
-            return RedirectToAction(nameof(Details),new {id=newCourseId});
+            return RedirectToAction(nameof(Details),new {id=newCourseId, information =model.GetInformation() });
         }
+
 
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
@@ -149,6 +159,7 @@ namespace BeautyCoursesPlace.Controllers
 
             return View(model);
         }
+
 
         [HttpPost]
         public async Task<IActionResult> Edit(int id, CourseFormModel model)
@@ -178,7 +189,7 @@ namespace BeautyCoursesPlace.Controllers
             }
 
             await courseService.Edit(id, model);
-            return RedirectToAction(nameof(Details), new {id});
+            return RedirectToAction(nameof(Details), new {id, information = model.GetInformation()});
         }
 
        

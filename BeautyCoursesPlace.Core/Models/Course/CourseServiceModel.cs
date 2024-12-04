@@ -2,10 +2,11 @@
 using System.ComponentModel.DataAnnotations;
 using static BeautyCoursesPlace.Infrastructure.Constants.DataConstants;
 using static BeautyCoursesPlace.Core.Constants.MessageConstants;
+using BeautyCoursesPlace.Core.Contracts;
 
 namespace BeautyCoursesPlace.Core.Models.Course
 {
-    public class CourseServiceModel
+    public class CourseServiceModel:ICourseModel
     {
         public int Id { get; set; }
 

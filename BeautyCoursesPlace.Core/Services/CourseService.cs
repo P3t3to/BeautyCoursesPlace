@@ -212,6 +212,7 @@ namespace BeautyCoursesPlace.Core.Services
                 .Select(c => new CourseIndexServiceModel()
                 {
                     Id = c.Id,
+                    Address=c.Address,
                     ImageUrl = c.ImageUrl,
                     Title = c.Title,
 

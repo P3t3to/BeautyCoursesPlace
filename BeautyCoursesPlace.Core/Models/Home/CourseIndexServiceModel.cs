@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BeautyCoursesPlace.Core.Contracts;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BeautyCoursesPlace.Core.Models.Home
 {
-    public class CourseIndexServiceModel
+    public class CourseIndexServiceModel:ICourseModel
     {
         public int Id { get; set; }
 
@@ -14,5 +15,6 @@ namespace BeautyCoursesPlace.Core.Models.Home
 
         public string ImageUrl { get; set; } = string.Empty;
 
+        public string Address { get; set; } = string.Empty;
     }
 }

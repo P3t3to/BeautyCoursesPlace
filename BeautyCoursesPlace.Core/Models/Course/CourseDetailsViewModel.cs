@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BeautyCoursesPlace.Core.Contracts;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BeautyCoursesPlace.Core.Models.Course
 {
-    public class CourseDetailsViewModel
+    public class CourseDetailsViewModel:ICourseModel
     {
         public int Id { get; set; }
 
