@@ -17,5 +17,7 @@ namespace BeautyCoursesPlace.Infrastructure.Data.Common
         Task<int> SaveChangesAsync();
 
         Task<T?> GetByIdAsync<T>(object id) where T : class;
+
+        Task DeleteAsync<T>(object id) where T : class;
     }
 }

@@ -41,5 +41,16 @@ namespace BeautyCoursesPlace.Core.Contracts
         Task<bool> HasLectorWithIdAsync(int courseId, string userId);
 
         Task<CourseFormModel?> RecieveCourseFormodelAsync(int id);
+
+        Task DeleteAsync(int courseId);
+
+        Task <bool> IsSigninAsync(int courseId);
+
+        Task<bool> IsSignoutByUserAsync(int courseId, string userid);
+
+        Task SignInMeAsync(int id, string userid);
+
+        Task SignMeOutAsync(int courseid, string userid);
+
     }
 }

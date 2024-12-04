@@ -2,13 +2,13 @@
 
 <div class="col-md-4">
     <div class="card mb-3">
-        <img class="card-img-top" src="@Model.ImageUrl" alt="House Image">
+        <img class="card-img-top" src="@Model.ImageUrl" alt="Course Image">
         <div class="card-body text-center">
             <h4>@Model.Title</h4>
             <h6>Address: <b>@Model.Address</b></h6>
             <h6>
                 Price Per Month:
-                <b>@String.Format("{0:f2}", Model.CostCourse) BGN</b>
+                <b>@String.Format("{0:f2}", Model.CostCourse) GBP</b>
             </h6>
             <h6>(@(Model.IsSignIn ? "SignedUp" : "Not still SignedUp"))</h6>
             <br />
@@ -18,7 +18,7 @@
             {
                 <a asp-area="" asp-controller="Course" asp-action="Edit" asp-route-id="@Model.Id"
                    class="btn btn-warning">Edit</a>
-                <a asp-area="" asp-controller="House" asp-action="Delete" asp-route-id="@Model.Id"
+                <a asp-area="" asp-controller="Course" asp-action="Delete" asp-route-id="@Model.Id"
                    class="btn btn-danger">Delete</a>
 
 
@@ -26,15 +26,15 @@
                 @if (!Model.IsSignIn)
                 {
                     <form class="input-group-sm" asp-controller="Course"
-                          asp-area="" asp-action="Sign In" asp-route-id="@Model.Id" method="post">
+                          asp-area="" asp-action="SignUp" asp-route-id="@Model.Id" method="post">
                         <input class="btn btn-primary" type="submit" value="Sign In" />
                     </form>
                 }
                 else
                 {
-                    <form asp-area="" asp-controller="Course" asp-action="Back"
+                    <form asp-area="" asp-controller="Course" asp-action="SignOff"
                           asp-route-id="@Model.Id" method="post">
-                        <input class="btn btn-primary" type="submit" value="Back" />
+                        <input class="btn btn-primary" type="submit" value="Sign Off" />
                     </form>
                 }
             }

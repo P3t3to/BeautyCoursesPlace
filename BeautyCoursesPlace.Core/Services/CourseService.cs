@@ -1,9 +1,12 @@
 ﻿using BeautyCoursesPlace.Core.Contracts;
 using BeautyCoursesPlace.Core.Enums;
+using BeautyCoursesPlace.Core.Exeptions;
 using BeautyCoursesPlace.Core.Models.Course;
 using BeautyCoursesPlace.Core.Models.Home;
 using BeautyCoursesPlace.Infrastructure.Data.Common;
 using BeautyCoursesPlace.Infrastructure.Data.Models;
+using DocumentFormat.OpenXml.Office2010.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -116,23 +119,30 @@ namespace BeautyCoursesPlace.Core.Services
                  .Where(c => c.Id == id)
                  .Select(c => new CourseDetailServiceModel()
                  {
-                     Id= c.Id,
-                     Address= c.Address,
+                     Id = c.Id,
+                     Address = c.Address,
                      Lector = new Models.Lector.LectorServiceModel()
                      {
-                         Email=c.Lector.User.Email,
-                         Number=c.Lector.Telephone
+                         Email = c.Lector.User.Email,
+                         Number = c.Lector.Telephone
                      },
-                     Category=c.Category.Name,
+                     Category = c.Category.Name,
                      Description = c.Description,
-                     ImageUrl=c.ImageUrl,
-                     IsSignIn=c.StudentId !=null,
-                     CostCourse=c.Cost,
-                     Title=c.Title,
+                     ImageUrl = c.ImageUrl,
+                     IsSignIn = c.StudentId != null,
+                     CostCourse = c.Cost,
+                     Title = c.Title,
 
                  })
                  .FirstAsync();
 
+        }
+
+        public async Task DeleteAsync(int courseId)
+        {
+
+            await repository.DeleteAsync<Course>(courseId);
+            await repository.SaveChangesAsync();
         }
 
         public async Task Edit(int courseId, CourseFormModel model)
@@ -146,7 +156,7 @@ namespace BeautyCoursesPlace.Core.Services
                 course.CategoryId = model.CategoryId;
                 course.Description = model.Description;
                 course.ImageUrl = model.ImageUrl;
-                course.Cost=model.Cost;
+                course.Cost = model.Cost;
                 course.Title = model.Title;
 
                 await repository.SaveChangesAsync();
@@ -162,7 +172,35 @@ namespace BeautyCoursesPlace.Core.Services
         public async Task<bool> HasLectorWithIdAsync(int courseId, string userId)
         {
             return await repository.AllReadOnly<Course>()
-                .AllAsync(c => c.Id == courseId && c.Lector.UserId == userId);
+              .AnyAsync(h => h.Id == courseId && h.Lector.UserId == userId);
+        }
+
+        public async Task<bool> IsSigninAsync(int courseId)
+        {
+            bool result = false;
+
+            var course = await repository.GetByIdAsync<Course>(courseId);
+
+            if (course != null)
+            {
+                result = course.StudentId != null;
+            }
+
+            return result;
+        }
+
+        public async Task<bool> IsSignoutByUserAsync(int courseId, string userid)
+        {
+            bool result = false;
+
+            var course = await repository.GetByIdAsync<Course>(courseId);
+
+            if (course != null)
+            {
+                result = course.StudentId == userid;
+            }
+
+            return result;
         }
 
         public async Task<IEnumerable<CourseIndexServiceModel>> LastThreeCoursesAsync()
@@ -203,26 +241,58 @@ namespace BeautyCoursesPlace.Core.Services
 
         public async Task<CourseFormModel?> RecieveCourseFormodelAsync(int id)
         {
-            var course= await repository.AllReadOnly<Course>()
-                .Where(c=> c.Id == id)
-                .Select(c=> new CourseFormModel()
+            var course = await repository.AllReadOnly<Course>()
+                .Where(c => c.Id == id)
+                .Select(c => new CourseFormModel()
                 {
-                    Address=c.Address,
-                    CategoryId=c.CategoryId,
-                    Description =c.Description,
-                    ImageUrl=c.ImageUrl,
-                    Cost=c.Cost,
-                    Title=c.Title,
+                    Address = c.Address,
+                    CategoryId = c.CategoryId,
+                    Description = c.Description,
+                    ImageUrl = c.ImageUrl,
+                    Cost = c.Cost,
+                    Title = c.Title,
 
                 })
                 .FirstOrDefaultAsync();
 
-            if (course!=null)
+            if (course != null)
             {
                 course.Categories = await AllCategoryAsync();
             }
-           
+
             return course;
+        }
+
+        public async Task SignInMeAsync(int id, string userid)
+        {
+
+
+            var course = await repository.GetByIdAsync<Course>(id);
+
+            if (course != null)
+            {
+                course.StudentId = userid;
+                await repository.SaveChangesAsync();
+
+            }
+        }
+
+        public async Task SignMeOutAsync(int courseid, string userId)
+        {
+            var course = await repository.GetByIdAsync<Course>(courseid);
+
+            if (course != null)
+            {
+                if (course.StudentId != userId)
+                {
+                    throw new UnauthorizedExeption("You are not permited to Sign out, you did not Signed in.");
+                }
+
+
+                course.StudentId = null;
+                await repository.SaveChangesAsync();
+
+            }
         }
     }
 }

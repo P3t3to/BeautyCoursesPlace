@@ -1,10 +1,14 @@
 ﻿using BeautyCoursesPlace.Attributes;
 using BeautyCoursesPlace.Core.Contracts;
+using BeautyCoursesPlace.Core.Exeptions;
 using BeautyCoursesPlace.Core.Models.Course;
 using BeautyCoursesPlace.Core.Services;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Office.Interop.Outlook;
+using System.Linq.Expressions;
+using System.Security.AccessControl;
 using System.Security.Claims;
 
 namespace BeautyCoursesPlace.Controllers
@@ -15,15 +19,19 @@ namespace BeautyCoursesPlace.Controllers
         private readonly ICourseService courseService;
 
         private readonly ILectorService lectorService;
+
+        private readonly ILogger logger;    
         public CourseController
             (ICourseService _courseService,
-            ILectorService _lectorService)
+            ILectorService _lectorService
+,            ILogger<CourseController>_logger)
         {
             courseService = _courseService;
             lectorService = _lectorService;
+            logger = _logger;
         }
 
-        
+
 
 
         [AllowAnonymous]
@@ -149,12 +157,12 @@ namespace BeautyCoursesPlace.Controllers
 
             if (await courseService.ExistAsync(id) == false)
             {
-                return BadRequest();
+                return BadRequest("Course does not exist.");
             }
 
             if (await courseService.HasLectorWithIdAsync(id, User.Id()) == false)
             {
-                return Unauthorized();
+                return Unauthorized("You do not have permission to edit this course.");
 
             }
 
@@ -173,32 +181,124 @@ namespace BeautyCoursesPlace.Controllers
             return RedirectToAction(nameof(Details), new {id});
         }
 
+       
+
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
+            // Проверка дали съществува курсът
+            if (await courseService.ExistAsync(id) == false)
+            {
+                return BadRequest("Course does not exist.");
+            }
 
-            var model = new CourseDetailsViewModel();
+            // Проверка за права на лектора
+            if (await courseService.HasLectorWithIdAsync(id, User.Id()) == false)
+            {
+                return Unauthorized("You do not have permission to delete this course.");
+            }
+
+            // Зареждане на детайлите за курса
+            var course = await courseService.CourseDetailsbyIdAsync(id);
+            if (course == null)
+            {
+                return NotFound("Course details could not be loaded.");
+            }
+
+            // Създаване на ViewModel
+            var model = new CourseDetailsViewModel()
+            {
+                Id = course.Id,
+                Address = course.Address,
+                ImageUrl = course.ImageUrl,
+                Title = course.Title
+            };
+
             return View(model);
         }
+        //public async Task<IActionResult> Delete(int id)
+        //{
 
-        [HttpPost]
-        public async Task<IActionResult> Delete(CourseDetailsViewModel model)
-        {
 
-            return RedirectToAction(nameof(All));
-        }
+
+        //    if (await courseService.ExistAsync(id)==false)
+        //    {
+        //        return BadRequest();
+
+        //    }
+
+        //    if (await courseService.HasLectorWithIdAsync(id,User.Id())==false)
+        //    {
+        //        return Unauthorized();
+        //    }
+
+        //    var course = await courseService.CourseDetailsbyIdAsync(id);
+
+        //    var model = new CourseDetailsViewModel()
+        //    {
+        //        Id=course.Id,
+        //        Address=course.Address,
+        //        ImageUrl=course.ImageUrl,
+        //       Title=course.Title,
+
+        //    };
+
+        //    return View(model);
+        //}
+
+        //[HttpPost]
+        //public async Task<IActionResult> Delete(CourseDetailsViewModel model)
+        //{
+
+
+        //    if (await courseService.ExistAsync(model.Id)==false)
+        //    {
+        //        return BadRequest();
+        //    }
+
+        //    if (await courseService.HasLectorWithIdAsync(model.Id, User.Id()) == false)
+        //    {
+        //        return Unauthorized();
+        //    }
+
+        //    await   courseService.DeleteAsync(model.Id);
+
+        //    return RedirectToAction(nameof(All));
+        //}
 
         [HttpPost]
         public async Task<IActionResult> SignUp(int id)
         {
-            return RedirectToAction(nameof(MyCourses));
+            if (await courseService.ExistAsync(id) == false)
+            {
+                return BadRequest("Course does not exist.");
+            }
+
+            await courseService.SignInMeAsync(id, User.Id());
+            return RedirectToAction(nameof(All));
         }
 
 
         [HttpPost]
         public async Task<IActionResult> SignOff(int id)
         {
-            return RedirectToAction(nameof(MyCourses));
+            if (await courseService.ExistAsync(id) == false)
+            {
+                return BadRequest("Course does not exist.");
+            }
+            try
+            {
+                await courseService.SignMeOutAsync(id, User.Id());
+            }
+            catch(UnauthorizedExeption msg)
+            {
+
+                logger.LogError(msg, "CourseController.SignMeOut");
+                return Unauthorized();
+            }
+
+                       
+            return RedirectToAction(nameof(All));
         }
 
     }
