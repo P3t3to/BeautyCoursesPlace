@@ -19,7 +19,8 @@
                class="btn btn-success">Details</a>
             @if (this.User.Identity.IsAuthenticated)
             {
-                if (await courseService.HasLectorWithIdAsync(Model.Id, User.Id()))
+                if (await courseService.HasLectorWithIdAsync(Model.Id, User.Id())
+                || User.IsAdmin())
                 {
                     <a asp-area="" asp-controller="Course" asp-action="Edit" asp-route-id="@Model.Id"
                        class="btn btn-warning">Edit</a>
@@ -28,7 +29,7 @@
                 }
                
                 <p></p>
-                @if (!Model.IsSignIn)
+                @if (!Model.IsSignIn || User.IsAdmin())
                 {
                     <form class="input-group-sm" asp-controller="Course"
                           asp-area="" asp-action="SignUp" asp-route-id="@Model.Id" method="post">

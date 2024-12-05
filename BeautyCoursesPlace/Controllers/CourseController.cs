@@ -149,9 +149,10 @@ namespace BeautyCoursesPlace.Controllers
                 return BadRequest();
             }
 
-            if (await courseService.HasLectorWithIdAsync(id, User.Id()) == false)
+            if (await courseService.HasLectorWithIdAsync(id, User.Id()) == false
+                && User.IsAdmin()==false)
             {
-                return Unauthorized();
+                return Unauthorized("You do not have permission to edit this course.");
 
             }
 
@@ -171,7 +172,8 @@ namespace BeautyCoursesPlace.Controllers
                 return BadRequest("Course does not exist.");
             }
 
-            if (await courseService.HasLectorWithIdAsync(id, User.Id()) == false)
+            if (await courseService.HasLectorWithIdAsync(id, User.Id()) == false
+                && User.IsAdmin() == false)
             {
                 return Unauthorized("You do not have permission to edit this course.");
 
@@ -197,26 +199,26 @@ namespace BeautyCoursesPlace.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-            // Проверка дали съществува курсът
+            
             if (await courseService.ExistAsync(id) == false)
             {
                 return BadRequest("Course does not exist.");
             }
 
-            // Проверка за права на лектора
-            if (await courseService.HasLectorWithIdAsync(id, User.Id()) == false)
+     
+            if (await courseService.HasLectorWithIdAsync(id, User.Id()) == false
+                && User.IsAdmin() == false)
             {
                 return Unauthorized("You do not have permission to delete this course.");
             }
 
-            // Зареждане на детайлите за курса
             var course = await courseService.CourseDetailsbyIdAsync(id);
             if (course == null)
             {
                 return NotFound("Course details could not be loaded.");
             }
 
-            // Създаване на ViewModel
+         
             var model = new CourseDetailsViewModel()
             {
                 Id = course.Id,

@@ -29,7 +29,7 @@
             <div class="form-inline">
                 @if (this.User.Identity.IsAuthenticated)
                 {
-                    if (await courseService.HasLectorWithIdAsync(Model.Id, User.Id()))
+                    if (await courseService.HasLectorWithIdAsync(Model.Id, User.Id())|| User.IsAdmin())
                     {
                         <a class="btn btn-warning" asp-controller="Course" asp-action="Edit"
                            asp-route-id="@Model.Id">Edit</a>
@@ -39,7 +39,7 @@
 
                                        
 
-                    @if (!Model.IsSignIn)
+                    @if (!Model.IsSignIn || User.IsAdmin())
                     {
                         <form class="ml-2" asp-controller="Course"
                               asp-action="Sign In" asp-route-id="@Model.Id" method="post">

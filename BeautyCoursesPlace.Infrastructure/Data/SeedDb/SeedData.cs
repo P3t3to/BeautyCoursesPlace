@@ -99,7 +99,7 @@ namespace BeautyCoursesPlace.Infrastructure.Data.SeedDb
                 LastName = "Deyanska Great Admin"
             };
 
-            GuestUser.PasswordHash =
+            AdminUser.PasswordHash =
             hasher.HashPassword(AdminUser, "admin123");
         }
 
