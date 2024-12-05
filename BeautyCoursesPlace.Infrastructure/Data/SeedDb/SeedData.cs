@@ -14,8 +14,12 @@ namespace BeautyCoursesPlace.Infrastructure.Data.SeedDb
 
         public ApplicationUser GuestUser { get; set; }
 
+        public ApplicationUser AdminUser { get; set; }
+
 
         public Lector Lector { get; set; }
+
+        public Lector AdminLector { get; set; }
 
         public Category MakeupCategory { get; set; }
 
@@ -68,6 +72,35 @@ namespace BeautyCoursesPlace.Infrastructure.Data.SeedDb
 
             GuestUser.PasswordHash =
             hasher.HashPassword(LectorUser, "guest123");
+
+
+            AdminUser = new ApplicationUser()
+            {
+                Id = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
+                UserName = "admin@mail.com",
+                NormalizedUserName = "ADMIN@MAIL.COM",
+                Email = "admin@mail.com",
+                NormalizedEmail = "ADMIN@MAIL.COM",
+                FirstName="Jasmin",
+                LastName= "Deyanska"
+            };
+
+            GuestUser.PasswordHash =
+            hasher.HashPassword(LectorUser, "guest123");
+
+            AdminUser = new ApplicationUser()
+            {
+                Id = "cc7a0b3d-02fc-468e-ad0c-3b4c79dcd53a",
+                UserName = "admint@mail.com",
+                NormalizedUserName = "ADMIN@MAIL.COM",
+                Email = "admin@mail.com",
+                NormalizedEmail = "ADMIN@MAIL.COM",
+                FirstName = "Viktoria",
+                LastName = "Deyanska Great Admin"
+            };
+
+            GuestUser.PasswordHash =
+            hasher.HashPassword(AdminUser, "admin123");
         }
 
         private void SeedLector()
@@ -77,6 +110,13 @@ namespace BeautyCoursesPlace.Infrastructure.Data.SeedDb
                 Id = 1,
                 Telephone = "+359888888888",
                 UserId = LectorUser.Id
+            };
+
+            AdminLector = new Lector()
+            {
+                Id = 5,
+                Telephone = "+359899987654",
+                UserId = AdminUser.Id
             };
         }
 

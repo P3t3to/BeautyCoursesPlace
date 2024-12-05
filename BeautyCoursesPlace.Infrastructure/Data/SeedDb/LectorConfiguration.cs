@@ -15,7 +15,7 @@ namespace BeautyCoursesPlace.Infrastructure.Data.SeedDb
         {
             var data = new SeedData();
 
-            builder.HasData(new Lector[] {data.Lector});
+            builder.HasData(new Lector[] {data.Lector, data.AdminLector});
         }
     }
 }

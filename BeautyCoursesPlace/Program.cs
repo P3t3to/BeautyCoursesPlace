@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("BeautyCoursesDbContextConnection") ?? throw new InvalidOperationException("Connection string 'BeautyCoursesDbContextConnection' not found.");
+//var connectionString = builder.Configuration.GetConnectionString("BeautyCoursesDbContextConnection") ?? throw new InvalidOperationException("Connection string 'BeautyCoursesDbContextConnection' not found.");
 
 
 builder.Services.AddApplicationDbContext(builder.Configuration);
@@ -65,5 +65,6 @@ app.UseEndpoints(endpoints =>
     endpoints.MapRazorPages();
 });
 
+await app.CreateAdminRoleAsync();
 
 await app.RunAsync();
