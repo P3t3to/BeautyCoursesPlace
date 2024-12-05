@@ -6,11 +6,12 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("BeautyCoursesDbContextConnection") ?? throw new InvalidOperationException("Connection string 'BeautyCoursesDbContextConnection' not found.");
 
 
 builder.Services.AddApplicationDbContext(builder.Configuration);
 builder.Services.AddApplicationIdentity(builder.Configuration);
-builder.Services.AddLocalization(option => option.ResourcesPath = "Resoursces");
+
 
 
 builder.Services.AddControllersWithViews(option =>
