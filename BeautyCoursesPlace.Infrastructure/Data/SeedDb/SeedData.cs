@@ -10,9 +10,9 @@ namespace BeautyCoursesPlace.Infrastructure.Data.SeedDb
 {
     internal class SeedData
     {
-        public IdentityUser LectorUser { get; set; }
+        public ApplicationUser LectorUser { get; set; }
 
-        public IdentityUser GuestUser { get; set; }
+        public ApplicationUser GuestUser { get; set; }
 
 
         public Lector Lector { get; set; }
@@ -41,9 +41,9 @@ namespace BeautyCoursesPlace.Infrastructure.Data.SeedDb
 
         private void SeedUsers()
         {
-            var hasher = new PasswordHasher<IdentityUser>();
+            var hasher = new PasswordHasher<ApplicationUser>();
 
-            LectorUser = new IdentityUser()
+            LectorUser = new ApplicationUser()
             {
                 Id = "dea12856-c198-4129-b3f3-b893d8395082",
                 UserName = "agent@mail.com",
@@ -57,7 +57,7 @@ namespace BeautyCoursesPlace.Infrastructure.Data.SeedDb
             LectorUser.PasswordHash =
                  hasher.HashPassword(LectorUser, "lector123");
 
-            GuestUser = new IdentityUser()
+            GuestUser = new ApplicationUser()
             {
                 Id = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
                 UserName = "guest@mail.com",

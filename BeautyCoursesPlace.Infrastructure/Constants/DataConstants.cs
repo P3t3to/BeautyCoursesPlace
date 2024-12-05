@@ -36,5 +36,13 @@ namespace BeautyCoursesPlace.Infrastructure.Constants
         public const int SaloonNameMaxLength = 30;
         public const int SaloonNamMinLength = 5;
 
+
+        // ApplicationUser
+        public const int UserFirstNameMax = 30;
+        public const int UserFirstNameMin = 2;
+
+        public const int UserLastNameMax = 30;
+        public const int UserLastNameMin = 2;
+
     }
 }

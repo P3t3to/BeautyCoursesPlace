@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BeautyCoursesPlace.Infrastructure.Data
 {
-    public class BeautyCoursesDbContext : IdentityDbContext
+    public class BeautyCoursesDbContext : IdentityDbContext<ApplicationUser>
     {
         public BeautyCoursesDbContext(DbContextOptions<BeautyCoursesDbContext> options)
             : base(options)
