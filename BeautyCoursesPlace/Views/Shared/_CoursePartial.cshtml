@@ -1,4 +1,6 @@
 ﻿@model CourseServiceModel
+@inject ILectorService  lectorService
+@inject ICourseService courseService
 
 <div class="col-md-4">
     <div class="card mb-3">
@@ -17,12 +19,14 @@
                class="btn btn-success">Details</a>
             @if (this.User.Identity.IsAuthenticated)
             {
-                <a asp-area="" asp-controller="Course" asp-action="Edit" asp-route-id="@Model.Id"
-                   class="btn btn-warning">Edit</a>
-                <a asp-area="" asp-controller="Course" asp-action="Delete" asp-route-id="@Model.Id"
-                   class="btn btn-danger">Delete</a>
-
-
+                if (await courseService.HasLectorWithIdAsync(Model.Id, User.Id()))
+                {
+                    <a asp-area="" asp-controller="Course" asp-action="Edit" asp-route-id="@Model.Id"
+                       class="btn btn-warning">Edit</a>
+                    <a asp-area="" asp-controller="Course" asp-action="Delete" asp-route-id="@Model.Id"
+                       class="btn btn-danger">Delete</a>
+                }
+               
                 <p></p>
                 @if (!Model.IsSignIn)
                 {

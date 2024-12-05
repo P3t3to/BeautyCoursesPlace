@@ -10,12 +10,17 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApplicationDbContext(builder.Configuration);
 builder.Services.AddApplicationIdentity(builder.Configuration);
+builder.Services.AddLocalization(option => option.ResourcesPath = "Resoursces");
+
 
 builder.Services.AddControllersWithViews(option =>
-{ 
-   option.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+{
+    option.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
     option.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
-});
+})
+    .AddViewLocalization(Microsoft.AspNetCore.Mvc.Razor.LanguageViewLocationExpanderFormat.Suffix)
+    .AddDataAnnotationsLocalization();
+
 
 builder.Services.AddApplicationService();
 

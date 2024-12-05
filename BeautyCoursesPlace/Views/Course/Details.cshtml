@@ -1,5 +1,6 @@
 ﻿@model CourseDetailServiceModel
-
+@inject ILectorService lectorService
+@inject ICourseService courseService
 
 
 @{
@@ -28,13 +29,15 @@
             <div class="form-inline">
                 @if (this.User.Identity.IsAuthenticated)
                 {
-                    
-                    
-                        <a class="btn btn-warning" asp-controller="House" asp-action="Edit"
+                    if (await courseService.HasLectorWithIdAsync(Model.Id, User.Id()))
+                    {
+                        <a class="btn btn-warning" asp-controller="Course" asp-action="Edit"
                            asp-route-id="@Model.Id">Edit</a>
-                        <a class="ml-2 btn btn-danger" asp-controller="House" asp-action="Delete"
+                        <a class="ml-2 btn btn-danger" asp-controller="Course" asp-action="Delete"
                            asp-route-id="@Model.Id">Delete</a>
-                    
+                    }
+
+                                       
 
                     @if (!Model.IsSignIn)
                     {
@@ -43,11 +46,11 @@
                             <input class="btn btn-primary" type="submit" value="Sign In" />
                         </form>
                     }
-                    else
+                    else if (await courseService.HasLectorWithIdAsync(Model.Id, User.Id()))
                     {
-                        <form class="ml-2" asp-controller="Course" asp-action="Back"
+                        <form class="ml-2" asp-controller="Course" asp-action="SignOut"
                               asp-route-id="@Model.Id" method="post">
-                            <input class="btn btn-primary" type="submit" value="Back" />
+                            <input class="btn btn-primary" type="submit" value="Sign out" />
                         </form>
                     }
                 }
@@ -55,7 +58,7 @@
             <p></p>
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
-                    <h5 class="card-title">Agent Info</h5>
+                    <h5 class="card-title">Lector Info</h5>
                    
                     <p class="card-text">Email:  @Model.Lector.Email</p>
                     <p class="card-text">Phone Number: @Model.Lector.Number</p>
