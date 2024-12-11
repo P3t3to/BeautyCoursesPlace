@@ -6,28 +6,30 @@
 
 @{
     string userName = string.Empty;
-
     if (SignInManager.IsSignedIn(User))
     {
         var user = await UserManager.FindByIdAsync(User.Id());
-        userName = $"{user.FirstName}{user.LastName}";
+        userName = $"{user.FirstName}{user.LastName} Administrator";
 
+    }
+    if (User?.Identity != null && User.Identity.IsAuthenticated)
+    {
+        var user = await UserManager.FindByIdAsync(User.Id());
+        userName = $"{user.FirstName} {user.LastName}";
     }
 }
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
-        if(await lectorService.ExistByIdAsync(User.Id())==false)
-        {
-            <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Lector" asp-action="Become">Become Lector</a>
-            </li>
-        }
-
-        
+               
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @userName</a>
         </li>
+
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-page="/" title="Back">Public Interface @userName</a>
+        </li>
+
         <li class="nav-item">
             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
                 <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
@@ -44,3 +46,4 @@
         </li>
     }
 </ul>
+ 
