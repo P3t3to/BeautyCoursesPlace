@@ -1,0 +1,79 @@
+﻿@model CreateSaloonViewModel
+
+@{
+    ViewBag.Title = "Open Saloon with Us";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center display-4" style="font-family: 'Caveat', cursive; color: #ff69b4;">
+        @ViewBag.Title
+    </h2>
+    <hr />
+
+    @if (!ViewData.ModelState.IsValid && ViewData.ModelState["Error"] != null)
+    {
+        <div class="alert alert-danger text-center" role="alert">
+            @ViewData.ModelState["Error"].Errors.First().ErrorMessage
+        </div>
+    }
+
+    <div class="row mt-4">
+        <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+            <form method="post">
+                <div class="form-group mb-4">
+                    <label asp-for="Name" class="form-label fw-bold">Saloon Name</label>
+                    <input asp-for="Name" class="form-control shadow-lg border-pink" placeholder="Saloon Name">
+                    <span asp-validation-for="Name" class="small text-danger"></span>
+                </div>
+                <div class="form-group mb-4">
+                    <label asp-for="Address" class="form-label fw-bold">Saloon Address</label>
+                    <input asp-for="Address" class="form-control shadow-lg border-pink" placeholder="Saloon Address">
+                    <span asp-validation-for="Address" class="small text-danger"></span>
+                </div>
+                <div class="form-group mb-4">
+                    <label asp-for="PartnerName" class="form-label fw-bold">Partner (if applicable)</label>
+                    <input asp-for="PartnerName" class="form-control shadow-lg border-pink" placeholder="Partner Name">
+                    <span asp-validation-for="PartnerName" class="small text-danger"></span>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-lg btn-pink">
+                        Open Saloon with Us
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        .border-pink {
+            border: 2px solid #ff69b4 !important;
+            border-radius: 0.5rem !important;
+        }
+
+            .border-pink:focus {
+                border-color: #ff1493 !important;
+                box-shadow: 0 0 10px rgba(255, 105, 180, 0.5) !important;
+            }
+
+        .btn-pink {
+            background-color: #ff69b4 !important;
+            color: white !important;
+            border-radius: 2rem !important;
+            padding: 0.5rem 2rem;
+            font-size: 1.2rem;
+            border: none;
+        }
+
+            .btn-pink:hover {
+                background-color: #ff1493 !important;
+                color: white !important;
+            }
+    </style>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

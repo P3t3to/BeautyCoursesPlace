@@ -1,9 +1,11 @@
 using BeautyCoursesPlace.Infrastructure.Data;
+using BeautyCoursesPlace.Infrastructure.Data.Models;
 using BeautyCoursesPlace.ModelBinders;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 
 var builder = WebApplication.CreateBuilder(args);
 //var connectionString = builder.Configuration.GetConnectionString("BeautyCoursesDbContextConnection") ?? throw new InvalidOperationException("Connection string 'BeautyCoursesDbContextConnection' not found.");

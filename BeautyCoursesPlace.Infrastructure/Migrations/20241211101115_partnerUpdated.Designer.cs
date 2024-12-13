@@ -4,6 +4,7 @@ using BeautyCoursesPlace.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BeautyCoursesPlace.Infrastructure.Migrations
 {
     [DbContext(typeof(BeautyCoursesDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241211101115_partnerUpdated")]
+    partial class partnerUpdated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -101,7 +104,7 @@ namespace BeautyCoursesPlace.Infrastructure.Migrations
                         {
                             Id = "dea12856-c198-4129-b3f3-b893d8395082",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "cea67c02-8a10-4929-9e4e-9337d6dad62e",
+                            ConcurrencyStamp = "a3e9ccfc-408d-4adb-9edb-f30e06189ec4",
                             Email = "agent@mail.com",
                             EmailConfirmed = false,
                             FirstName = "",
@@ -109,9 +112,9 @@ namespace BeautyCoursesPlace.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "agent@mail.com",
                             NormalizedUserName = "agent@mail.com",
-                            PasswordHash = "AQAAAAIAAYagAAAAEPK0R2oC65eA6Clf9Oz65gCkLlKG42xcESqz1Uq8+fF9kJZevIhZO8hVrdeutoSIYw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEKXnxcjavhwMxi9rYXHMZgf+zJ6RGF2lYaYs+iXiT9pA/kiDQSZQc3+HzgDUZLrN+Q==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "cd40e727-8104-41ad-8ddb-c0d275b2c9ef",
+                            SecurityStamp = "3fb4b63e-393d-4eec-b5fc-15414fa5de1d",
                             TwoFactorEnabled = false,
                             UserName = "agent@mail.com"
                         },
@@ -119,7 +122,7 @@ namespace BeautyCoursesPlace.Infrastructure.Migrations
                         {
                             Id = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "cea3db77-0dd1-4d38-892b-ac782d6ad953",
+                            ConcurrencyStamp = "10e82c79-f3c2-4687-8a2a-37c05a79f819",
                             Email = "guest@mail.com",
                             EmailConfirmed = false,
                             FirstName = "",
@@ -127,9 +130,9 @@ namespace BeautyCoursesPlace.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "guest@mail.com",
                             NormalizedUserName = "guest@mail.com",
-                            PasswordHash = "AQAAAAIAAYagAAAAEMO6HHJTmbH1NfnXJARW4Y9cxC0upMH9E0FaQKkO//1iOz8FdUCE9rZX3FTfSKcbAg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIsPFT0rBp3v2pX+IGlspx09Ye9rpiC5wOO23dh6KsZ2gZN4tgWHDB2kztT7TiavVg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "28204033-3922-40dc-b674-74f301040dfd",
+                            SecurityStamp = "407b0cf7-4acd-4b12-b36d-4a8d62b77cc8",
                             TwoFactorEnabled = false,
                             UserName = "guest@mail.com"
                         },
@@ -137,7 +140,7 @@ namespace BeautyCoursesPlace.Infrastructure.Migrations
                         {
                             Id = "cc7a0b3d-02fc-468e-ad0c-3b4c79dcd53a",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "69028920-5a3b-4ad6-9969-0e6a8ad18b36",
+                            ConcurrencyStamp = "5b19671b-60e0-42d1-b5d5-a46b50fb0dba",
                             Email = "admin@mail.com",
                             EmailConfirmed = false,
                             FirstName = "Viktoria",
@@ -145,9 +148,9 @@ namespace BeautyCoursesPlace.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@MAIL.COM",
                             NormalizedUserName = "ADMIN@MAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEOxmPjaNyrfKxaaiVNGSn9pdhfjTEPta9yTYI0icV3GdmDC8D9S3tfa30QsLzPbC8A==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGOfwmUFxjrAnVRMex6dkZiwPCJve4Q/dvIvS0rxmnjuZI3DSy4RU1uNcDhYSStOWA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "9033b5fd-fea1-4d8f-9c63-1242d6f85b4d",
+                            SecurityStamp = "48cda78d-4977-4135-993b-43dcd2b24327",
                             TwoFactorEnabled = false,
                             UserName = "admint@mail.com"
                         });
@@ -351,6 +354,7 @@ namespace BeautyCoursesPlace.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
+                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)")
                         .HasComment("Partner address");
@@ -366,31 +370,9 @@ namespace BeautyCoursesPlace.Infrastructure.Migrations
                         .HasColumnType("nvarchar(30)")
                         .HasComment("Partner name");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.ToTable("Partners");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Address = "",
-                            ImageUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNttQsOgRhhhzmKi-gAW23cj2VgGcayhsnkA&s",
-                            Name = "BeautyPlace",
-                            UserId = ""
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Address = "",
-                            ImageUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQa4puCFpPTXAjYJHIMCXEz1vUFuCj6LnwUKg&s",
-                            Name = "HairByMaster",
-                            UserId = ""
-                        });
                 });
 
             modelBuilder.Entity("BeautyCoursesPlace.Infrastructure.Data.Models.Saloon", b =>
@@ -415,10 +397,6 @@ namespace BeautyCoursesPlace.Infrastructure.Migrations
 
                     b.Property<int>("PartnerId")
                         .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

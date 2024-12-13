@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BeautyCoursesPlace.Infrastructure.Data.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,6 +58,19 @@ namespace BeautyCoursesPlace.Infrastructure.Data.Common
             {
                 DbSet<T>().Remove(entity);
             }
+        }
+
+        public async Task<List<Saloon>> GetSaloonsByPartnerIdAsync(int partnerId)
+        {
+            return await DbSet<Saloon>()
+                .Where(s => s.PartnerId == partnerId)
+                .ToListAsync();
+        }
+
+        public async Task<Saloon?> GetSaloonByIdAsync(int saloonId)
+        {
+            return await DbSet<Saloon>()
+                .FirstOrDefaultAsync(s => s.Id == saloonId);
         }
     }
 }

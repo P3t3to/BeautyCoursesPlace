@@ -18,8 +18,15 @@ namespace BeautyCoursesPlace.Infrastructure.Data
             builder.ApplyConfiguration(new LectorConfiguration());
             builder.ApplyConfiguration(new CategoryConfiguration());
             builder.ApplyConfiguration(new CourseConfiguration());
+            
 
             base.OnModelCreating(builder);
+
+            builder.Entity<Partner>().HasData(
+            new Partner { Id = 1,Name = "BeautyPlace", ImageUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNttQsOgRhhhzmKi-gAW23cj2VgGcayhsnkA&s" },
+            new Partner { Id = 2,  Name = "HairByMaster", ImageUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQa4puCFpPTXAjYJHIMCXEz1vUFuCj6LnwUKg&s" }
+            );
+
         }
 
         public DbSet<Course> Courses { get; set; } = null!;

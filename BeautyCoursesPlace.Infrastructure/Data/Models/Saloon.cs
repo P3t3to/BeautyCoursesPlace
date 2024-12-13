@@ -31,5 +31,7 @@ namespace BeautyCoursesPlace.Infrastructure.Data.Models
 
         [ForeignKey(nameof(PartnerId))]
         public virtual Partner Partner { get; set; } = null!;
+
+        public string UserId { get; set; } = string.Empty;
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BeautyCoursesPlace.Infrastructure.Data.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,5 +20,9 @@ namespace BeautyCoursesPlace.Infrastructure.Data.Common
         Task<T?> GetByIdAsync<T>(object id) where T : class;
 
         Task DeleteAsync<T>(object id) where T : class;
+
+        Task<List<Saloon>> GetSaloonsByPartnerIdAsync(int partnerId);
+
+        Task<Saloon?> GetSaloonByIdAsync(int saloonId);
     }
 }

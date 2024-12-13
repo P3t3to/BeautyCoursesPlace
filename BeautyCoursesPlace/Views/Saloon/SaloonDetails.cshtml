@@ -1,0 +1,51 @@
+﻿@model SaloonViewModel
+
+@* <h2>Салон: @Model.Name</h2>
+<p>Адрес: @Model.Address</p> *@
+
+
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Салон: @Model.Name</title>
+    <style>
+        /* Стилизиране на картичките в розово */
+        .saloon-card, .message-card {
+            background-color: #f8c6d1; /* Розов фон */
+            border-radius: 10px;
+            padding: 20px;
+            width: 300px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-top: 20px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+            .saloon-card h2, .message-card h2 {
+                color: #d05d79; /* Розово-червен цвят за заглавията */
+                margin-bottom: 10px;
+            }
+
+            .saloon-card p, .message-card p {
+                color: #555;
+                font-size: 1.1em;
+            }
+    </style>
+</head>
+<body>
+    <!-- Картичката със салона -->
+    <div class="saloon-card">
+        <h2>Салон: @Model.Name</h2>
+        <p>Адрес: @Model.Address</p>
+    </div>
+
+    <!-- Благодарствено съобщение -->
+    <div class="message-card">
+        <h2>Thank You!</h2>
+        <p>You made the right choice. We will contact you for information and meeting. Thank you!</p>
+    </div>
+</body>
+</html>

@@ -20,13 +20,22 @@ namespace BeautyCoursesPlace.Infrastructure.Data.Models
         public string  Name { get; set; } = string.Empty;
 
 
-        [Required]
+       
         [MaxLength(AddressMaxLength)]
         [Comment("Partner address")]
-        public string Address { get; set; } = string.Empty;
+        public string? Address{ get; set; } = string.Empty;
 
         public List<Course> Courses { get; set; } = new List<Course>();
 
         public List<Saloon> Saloons { get; set; } = new List<Saloon>();
+
+
+        [Required]
+        [Comment("Partner logo or image URL")]
+        public string ImageUrl { get; set; } = string.Empty;
+
+
+        [Required]
+        public string UserId { get; set; } = string.Empty;
     }
 }
