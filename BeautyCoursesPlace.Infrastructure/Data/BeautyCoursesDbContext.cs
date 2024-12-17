@@ -41,6 +41,8 @@ namespace BeautyCoursesPlace.Infrastructure.Data
 
         public DbSet<Saloon> Saloons { get; set; } = null!;
 
+        public DbSet<Review> Reviews { get; set; }
+
 
     }
 }

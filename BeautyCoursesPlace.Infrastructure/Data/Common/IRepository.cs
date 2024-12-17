@@ -1,4 +1,5 @@
 ﻿using BeautyCoursesPlace.Infrastructure.Data.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,5 +25,15 @@ namespace BeautyCoursesPlace.Infrastructure.Data.Common
         Task<List<Saloon>> GetSaloonsByPartnerIdAsync(int partnerId);
 
         Task<Saloon?> GetSaloonByIdAsync(int saloonId);
+
+        public DbSet<T> Set<T>() where T : class;
+
+        IQueryable<Course> AllCourses();
+
+        IQueryable<Course> Courses { get; }
+
+       
+
+
     }
 }

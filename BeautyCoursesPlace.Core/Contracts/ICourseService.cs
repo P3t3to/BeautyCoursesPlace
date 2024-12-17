@@ -1,6 +1,7 @@
 ﻿using BeautyCoursesPlace.Core.Enums;
 using BeautyCoursesPlace.Core.Models.Course;
 using BeautyCoursesPlace.Core.Models.Home;
+using BeautyCoursesPlace.Infrastructure.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,6 +52,12 @@ namespace BeautyCoursesPlace.Core.Contracts
         Task SignInMeAsync(int id, string userid);
 
         Task SignMeOutAsync(int courseid, string userid);
+
+        Task<List<Course>> GetAllCoursesAsync();
+
+       Task<Course> GetCourseByIdAsync(int courseId);
+
+        Task<IEnumerable<CourseViewModel>> GetSignedInCoursesAsync(string userId);
 
     }
 }

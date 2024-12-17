@@ -6,11 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace BeautyCoursesPlace.Infrastructure.Data.Common
 {
     public class Repository : IRepository
     {
         private readonly DbContext context;
+
+        public IQueryable<Course> Courses => context.Set<Course>();
 
         public Repository(BeautyCoursesDbContext _context)
         {
@@ -71,6 +74,21 @@ namespace BeautyCoursesPlace.Infrastructure.Data.Common
         {
             return await DbSet<Saloon>()
                 .FirstOrDefaultAsync(s => s.Id == saloonId);
+        }
+
+        public DbSet<T> Set<T>() where T : class
+        {
+            return context.Set<T>();
+        }
+
+        //public IQueryable<Course> AllCourses()
+        //{
+        //    return Set<Course>();
+        //}
+
+        public IQueryable<Course> AllCourses()
+        {
+            return context.Set<Course>(); // Връща всички курсове от DbContext
         }
     }
 }

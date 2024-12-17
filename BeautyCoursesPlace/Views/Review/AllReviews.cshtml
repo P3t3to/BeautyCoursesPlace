@@ -1,0 +1,67 @@
+﻿@model IEnumerable<CourseViewModel>
+
+
+
+<h2>Your Signed-In Courses</h2>
+
+<ul>
+    @foreach (var course in Model)
+    {
+        <li>
+            <h3>@course.Title</h3>
+            <p>@course.Description</p>
+            <img src="@course.ImageUrl" alt="Course Image" style="width: 200px;" />
+            <a asp-action="AddReview" asp-route-id="@course.Id">Add Review</a>
+        </li>
+    }
+</ul>
+
+@* <h2>Course: @Model.CourseName</h2>
+
+<h3>Reviews:</h3>
+<ul>
+    @foreach (var review in Model.Reviews)
+    {
+        <li>
+            <strong>@review.UserName</strong> (Reviewed on: @review.CreatedOn.ToString("dd-MM-yyyy"))
+            <p>@review.Feedback</p>
+        </li>
+    }
+</ul>
+
+<!-- Форма за добавяне на ново ревю -->
+<form asp-action="AddReview" method="post">
+    <input type="hidden" name="CourseId" value="@Model.CourseId" />
+    <div class="form-group">
+        <label for="feedback">Your Review</label>
+        <textarea id="feedback" name="Feedback" class="form-control" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit Review</button>
+</form> *@
+
+
+
+@* <h1>Course Reviews</h1>
+
+@foreach (var course in Model)
+{
+    <div>
+        <h3>@course.CourseTitle</h3>
+        <p>@course.CourseDescription</p>
+
+        <h4>Reviews:</h4>
+        <ul>
+            @foreach (var review in course.Reviews)
+            {
+                <li>@review.Feedback</li>
+            }
+        </ul>
+
+        <h4>Add a review:</h4>
+        <form method="post" asp-action="AddReview">
+            <textarea name="feedback" placeholder="Write your review here..."></textarea>
+            <input type="hidden" name="courseId" value="@course.CourseId" />
+            <button type="submit">Add Review</button>
+        </form>
+    </div>
+} *@

@@ -5,10 +5,12 @@ using BeautyCoursesPlace.Core.Models.Course;
 using BeautyCoursesPlace.Core.Models.Home;
 using BeautyCoursesPlace.Infrastructure.Data.Common;
 using BeautyCoursesPlace.Infrastructure.Data.Models;
+using DocumentFormat.OpenXml.InkML;
 using DocumentFormat.OpenXml.Office2010.Excel;
 using DocumentFormat.OpenXml.Spreadsheet;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol.Core.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -212,7 +214,7 @@ namespace BeautyCoursesPlace.Core.Services
                 .Select(c => new CourseIndexServiceModel()
                 {
                     Id = c.Id,
-                    Address=c.Address,
+                    Address = c.Address,
                     ImageUrl = c.ImageUrl,
                     Title = c.Title,
 
@@ -294,6 +296,41 @@ namespace BeautyCoursesPlace.Core.Services
                 await repository.SaveChangesAsync();
 
             }
+        }
+
+        public async Task<List<Course>> GetAllCoursesAsync()
+        {
+            // Викаме метода от репозитория и връщаме резултата като List
+            return await repository.All<Course>().ToListAsync();
+        }
+
+        public async Task<Course> GetCourseByIdAsync(int courseId)
+        {
+            return await repository.GetByIdAsync<Course>(courseId);
+        }
+
+
+        public interface ICourseService
+        {
+            Task<IEnumerable<CourseViewModel>> GetSignedInCoursesAsync(string userId);
+        }
+
+        public async Task<IEnumerable<CourseViewModel>> GetSignedInCoursesAsync(string userId)
+        {
+            var courses = await repository.Courses.ToListAsync();
+
+            // Филтриране в паметта на тези, в които потребителят е записан
+            var signedInCourses = courses
+                .Where(c => !string.IsNullOrEmpty(c.StudentId) && c.StudentId.Split(',').Contains(userId))
+                .Select(c => new CourseViewModel
+                {
+                    Id = c.Id,
+                    Title = c.Title,
+                    Description = c.Description,
+                    ImageUrl = c.ImageUrl
+                });
+
+            return signedInCourses;
         }
     }
 }

@@ -1,0 +1,113 @@
+﻿@model IEnumerable<CourseViewModel>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Signed-In Courses</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ede7f6; /* Лек лилав фон */
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            text-align: center;
+            color: #ba68c8; /* Лилаво-розов заглавен цвят */
+            margin-top: 20px;
+        }
+
+        .course-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .course-card {
+            background-color: #fff;
+            border: 1px solid #f8bbd0; /* Много светло розов кант */
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            overflow: hidden;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+            .course-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            }
+
+            .course-card img {
+                width: 100%;
+                height: 150px;
+                object-fit: cover;
+                border-bottom: 1px solid #f8bbd0;
+            }
+
+            .course-card h3 {
+                margin: 10px 0;
+                color: #d48fbc; /* Нежно розов текст */
+                font-size: 20px;
+            }
+
+            .course-card p {
+                color: #555;
+                font-size: 14px;
+                padding: 0 10px;
+            }
+
+        .add-review-link {
+            display: inline-block;
+            margin: 10px 0 15px;
+            padding: 10px 20px;
+            color: #fff;
+            background-color: #d48fbc; /* Нежно розов бутон */
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 20px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+            .add-review-link:hover {
+                background-color: #c48fb3; /* По-тъмен нюанс на нежно розовото */
+                transform: scale(1.05);
+            }
+    </style>
+</head>
+<body>
+    <h2>Your Signed-In Courses</h2>
+
+    <div class="course-container">
+        @foreach (var course in Model)
+        {
+            <div class="course-card">
+                <img src="@course.ImageUrl" alt="Course Image" />
+                <h3>@course.Title</h3>
+                <p>@course.Description</p>
+                <a asp-action="AddReview" asp-route-id="@course.Id" class="add-review-link">Add Review</a>
+            </div>
+        }
+    </div>
+</body>
+</html>
+@* 
+<h2>Your Signed-In Courses</h2>
+
+<ul>
+    @foreach (var course in Model)
+    {
+        <li>
+            <h3>@course.Title</h3>
+            <p>@course.Description</p>
+            <img src="@course.ImageUrl" alt="Course Image" style="width: 200px;" />
+            <a asp-action="AddReview" asp-route-id="@course.Id">Add Review</a>
+        </li>
+    }
+</ul> *@
