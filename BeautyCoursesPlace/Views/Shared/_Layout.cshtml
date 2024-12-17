@@ -38,10 +38,13 @@
     <footer class="border-top footer text-muted">
         <div class="container">
             <div class="row">
-                <div class="col-md-4">
+                <!-- Лява част: Текста 2024 BeautyCoursesPlace (още по-малко пространство) -->
+                <div class="col-md-1 text-start">
                     &copy; @DateTime.Today.Year - BeautyCoursesPlace
                 </div>
-                <div class="col-md-8 text-end">
+
+                <!-- Дясна част: Партньори (още повече пространство) -->
+                <div class="col-md-11 text-end">
                     <div class="footer">
                         @await Component.InvokeAsync("Partners")
                     </div>

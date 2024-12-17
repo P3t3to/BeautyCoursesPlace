@@ -229,55 +229,7 @@ namespace BeautyCoursesPlace.Controllers
 
             return View(model);
         }
-        //public async Task<IActionResult> Delete(int id)
-        //{
-
-
-
-        //    if (await courseService.ExistAsync(id)==false)
-        //    {
-        //        return BadRequest();
-
-        //    }
-
-        //    if (await courseService.HasLectorWithIdAsync(id,User.Id())==false)
-        //    {
-        //        return Unauthorized();
-        //    }
-
-        //    var course = await courseService.CourseDetailsbyIdAsync(id);
-
-        //    var model = new CourseDetailsViewModel()
-        //    {
-        //        Id=course.Id,
-        //        Address=course.Address,
-        //        ImageUrl=course.ImageUrl,
-        //       Title=course.Title,
-
-        //    };
-
-        //    return View(model);
-        //}
-
-        //[HttpPost]
-        //public async Task<IActionResult> Delete(CourseDetailsViewModel model)
-        //{
-
-
-        //    if (await courseService.ExistAsync(model.Id)==false)
-        //    {
-        //        return BadRequest();
-        //    }
-
-        //    if (await courseService.HasLectorWithIdAsync(model.Id, User.Id()) == false)
-        //    {
-        //        return Unauthorized();
-        //    }
-
-        //    await   courseService.DeleteAsync(model.Id);
-
-        //    return RedirectToAction(nameof(All));
-        //}
+        
 
         [HttpPost]
         public async Task<IActionResult> SignUp(int id)

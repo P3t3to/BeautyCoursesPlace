@@ -29,7 +29,7 @@
                 }
                
                 <p></p>
-                @if (!Model.IsSignIn || User.IsAdmin())
+                @if (!Model.IsSignIn || User.IsAdmin() || await courseService.HasLectorWithIdAsync(Model.Id, User.Id()))
                 {
                     <form class="input-group-sm" asp-controller="Course"
                           asp-area="" asp-action="SignUp" asp-route-id="@Model.Id" method="post">

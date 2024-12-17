@@ -43,7 +43,7 @@ namespace BeautyCoursesPlace.Controllers
         }
 
 
-        // Действие за създаване на нов салон
+        
         public IActionResult Create()
         {
             return View("CreateSaloonView");
@@ -60,7 +60,7 @@ namespace BeautyCoursesPlace.Controllers
 
                 if (string.IsNullOrEmpty(userId))
                 {
-                    return Unauthorized(); // Ако няма идентифициран потребител
+                    return Unauthorized(); 
                 }
 
                 var saloonModel = new SaloonViewModel
@@ -69,25 +69,25 @@ namespace BeautyCoursesPlace.Controllers
                     Address = model.Address
                 };
 
-                // Създаване на салона без да получаваме резултат
+                
                 var saloonId = await saloonService.CreateSaloonAsync(saloonModel, userId);
 
-                // Пренасочване към новото изглед за детайли на салона
+               
                 return RedirectToAction("SaloonDetails", new { id = saloonId });
             }
 
-            return View("CreateSaloonView", model); // Връщаме обратно ако има грешки в данните
+            return View("CreateSaloonView", model); 
         }
 
         public async Task<IActionResult> SaloonDetails(int id)
         {
-            // Вземане на салона с подаденото ID
+           
             var saloon = await saloonService.GetSaloonByIdAsync(id);
 
-            // Ако салонът не бъде намерен
+         
             if (saloon == null)
             {
-                return NotFound(); // Връщаме NotFound ако няма такъв салон
+                return NotFound(); 
             }
 
             var saloonViewModel = new SaloonViewModel

@@ -169,20 +169,34 @@ namespace BeautyCoursesPlace.Areas.Identity.Pages.Account
             // If we got this far, something failed, redisplay form
             return Page();
         }
-
         private ApplicationUser CreateUser()
         {
             try
             {
+                _logger.LogInformation("Trying to create ApplicationUser instance.");
                 return Activator.CreateInstance<ApplicationUser>();
             }
-            catch
+            catch (Exception ex)
             {
+                _logger.LogError($"Error creating user: {ex.Message}");
                 throw new InvalidOperationException($"Can't create an instance of '{nameof(ApplicationUser)}'. " +
                     $"Ensure that '{nameof(ApplicationUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
                     $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
             }
         }
+        //private ApplicationUser CreateUser()
+        //{
+        //    try
+        //    {
+        //        return Activator.CreateInstance<ApplicationUser>();
+        //    }
+        //    catch
+        //    {
+        //        throw new InvalidOperationException($"Can't create an instance of '{nameof(ApplicationUser)}'. " +
+        //            $"Ensure that '{nameof(ApplicationUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
+        //            $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
+        //    }
+        //}
 
         private IUserEmailStore<ApplicationUser> GetEmailStore()
         {
