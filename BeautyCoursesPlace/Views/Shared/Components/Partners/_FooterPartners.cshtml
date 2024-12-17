@@ -1,0 +1,43 @@
+﻿@model List<BeautyCoursesPlace.Core.Models.Partner.PartnerViewModel>
+
+
+<div class="footer-partners">
+    <h5>Our Partners</h5>
+    <div class="partner-logos">
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var partner in Model)
+            {
+                <div class="partner-logo">
+                    <!-- Добавяме линк към детайлите на партньора -->
+                    <a href="@Url.Action("Details", "Partner", new { id = partner.Id })">
+                        <img src="@partner.ImageUrl" alt="@partner.Name" class="img-fluid" />
+                    </a>
+                </div>
+            }
+        }
+        else
+        {
+            <p>No partners available.</p>
+        }
+    </div>
+</div>
+
+<style>
+    .footer-partners {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .partner-logos {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .partner-logo img {
+        max-height: 50px;
+        object-fit: contain;
+    }
+</style>

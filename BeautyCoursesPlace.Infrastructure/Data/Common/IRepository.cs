@@ -32,7 +32,10 @@ namespace BeautyCoursesPlace.Infrastructure.Data.Common
 
         IQueryable<Course> Courses { get; }
 
-       
+        IQueryable<Partner> Partners { get; }
+        Task<Partner> GetByIdAsync(int id);
+
+
 
 
     }

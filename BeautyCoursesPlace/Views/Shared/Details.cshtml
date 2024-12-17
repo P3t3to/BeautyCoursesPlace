@@ -1,0 +1,92 @@
+﻿@model PartnerViewModel
+
+<div class="partner-details-card">
+    <h2>@Model.Name</h2>
+
+    <div class="partner-image">
+        <img src="@Model.ImageUrl" alt="@Model.Name" class="img-fluid" />
+    </div>
+
+    <p><strong>Address:</strong> @Model.Address</p>
+
+    <h4>Courses</h4>
+    <ul>
+        @foreach (var course in Model.Courses)
+        {
+            <li>@course</li>
+        }
+    </ul>
+
+    <h4>Saloons</h4>
+    <ul>
+        @foreach (var saloon in Model.Saloons)
+        {
+            <li>@saloon</li>
+        }
+    </ul>
+</div>
+
+<style>
+    .partner-details-card {
+        background-color: #e6d7f7; /* Лилав фон */
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        margin: 20px auto;
+        color: #d4006b; /* Розови букви */
+    }
+
+        .partner-details-card h2 {
+            color: #d4006b; /* Розови букви за заглавието */
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .partner-details-card h4 {
+            color: #d4006b; /* Розови букви за подзаглавията */
+            margin-top: 20px;
+        }
+
+        .partner-details-card p {
+            font-size: 1.1em;
+        }
+
+        .partner-details-card ul {
+            padding-left: 20px;
+        }
+
+        .partner-details-card li {
+            font-size: 1em;
+            color: #d4006b; /* Розови букви за елементите в списъците */
+        }
+
+    .partner-image img {
+        max-width: 100%;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+</style>
+
+@* <h2>@Model.Name</h2>
+
+<div>
+    <img src="@Model.ImageUrl" alt="@Model.Name" class="img-fluid" />
+    <p><strong>Address:</strong> @Model.Address</p>
+
+    <h4>Courses</h4>
+    <ul>
+        @foreach (var course in Model.Courses)
+        {
+            <li>@course</li>
+        }
+    </ul>
+
+    <h4>Saloons</h4>
+    <ul>
+        @foreach (var saloon in Model.Saloons)
+        {
+            <li>@saloon</li>
+        }
+    </ul>
+</div> *@

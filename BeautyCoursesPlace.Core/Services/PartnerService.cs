@@ -3,6 +3,7 @@ using BeautyCoursesPlace.Core.Models.Course;
 using BeautyCoursesPlace.Core.Models.Partner;
 using BeautyCoursesPlace.Infrastructure.Data.Common;
 using BeautyCoursesPlace.Infrastructure.Data.Models;
+using DocumentFormat.OpenXml.InkML;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Protocol.Core.Types;
 using System;
@@ -24,74 +25,18 @@ namespace BeautyCoursesPlace.Core.Services
 
         }
 
-
-
-        //public async Task<IEnumerable<PartnerViewModel>> FooterPartners()
-
-        //{
-
-        //    return await repository.AllReadOnly<Partner>()
-
-        //       .Select(p => new PartnerViewModel()
-
-        //       {
-
-        //           Id = p.Id,
-
-        //           Name = p.Name,
-
-        //           ImageUrl = p.ImageUrl,
-
-        //       })
-
-        //       .ToListAsync();
-
-        //}
-
-        public async Task<IEnumerable<PartnerViewModel>> FooterPartners()
-
+        public async Task<Partner> GetPartnerByIdAsync(int id)
         {
-
-            return await repository.AllReadOnly<Partner>()
-
-               .Select(p => new PartnerViewModel()
-
-               {
-
-                   Id = p.Id,
-
-                   Name = p.Name,
-
-                   ImageUrl = p.ImageUrl,
-
-               })
-
-               .ToListAsync();
-
+            return await repository.All<Partner>()
+                .Include(p => p.Courses)
+                .Include(p => p.Saloons)
+                .FirstOrDefaultAsync(p => p.Id == id);
         }
 
-
-
-
-
-
-        //public async Task<IEnumerable<PartnerViewModel>> FooterPartners()
-        //{
-        //    var query = repository.AllReadOnly<Partner>()
-        //        .Select(p => new PartnerViewModel
-        //        {
-        //            Id = p.Id,
-        //            Name = p.Name,
-        //            ImageUrl = p.ImageUrl
-        //        });
-
-        //    // Извеждаме SQL заявката в конзолата
-        //    Console.WriteLine(query.ToQueryString());
-
-        //    return await query.ToListAsync();
-        //}
-
-
+        public async Task<IEnumerable<Partner>> GetAllPartnersAsync()
+        {
+            return await repository.All<Partner>().ToListAsync();
+        }
     }
 }
 

@@ -8,7 +8,7 @@ namespace BeautyCoursesPlace.Core.Models.Review
 {
     public class CreateReviewViewModel
     {
-        public int CourseId { get; set; }        // Идентификатор на курса
+        public int CourseId { get; set; }       
         public string Feedback
         {
             get; set;

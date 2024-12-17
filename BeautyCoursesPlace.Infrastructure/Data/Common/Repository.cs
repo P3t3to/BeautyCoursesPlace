@@ -88,7 +88,16 @@ namespace BeautyCoursesPlace.Infrastructure.Data.Common
 
         public IQueryable<Course> AllCourses()
         {
-            return context.Set<Course>(); // Връща всички курсове от DbContext
+            return context.Set<Course>(); 
         }
+
+
+
+        public async Task<Partner> GetByIdAsync(int id)
+        {
+            return await context.Set<Partner>().FindAsync(id);
+        }
+
+        public IQueryable<Partner> Partners => context.Set<Partner>();
     }
 }

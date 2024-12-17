@@ -8,8 +8,8 @@ namespace BeautyCoursesPlace.Core.Models.Review
 {
     public class CourseReviewsViewModel
     {
-        public int CourseId { get; set; } // Идентификатор на курса
-        public string CourseName { get; set; } = null!; // Име на курса
-        public List<CourseReviewViewModel> Reviews { get; set; } = new List<CourseReviewViewModel>(); // Рецензии за курса
+        public int CourseId { get; set; } 
+        public string CourseName { get; set; } = null!; 
+        public List<CourseReviewViewModel> Reviews { get; set; } = new List<CourseReviewViewModel>(); 
     }
 }

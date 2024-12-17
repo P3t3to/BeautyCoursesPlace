@@ -44,135 +44,28 @@ namespace BeautyCoursesPlace.Controllers
         [HttpGet]
         [AllowAnonymous]
 
-        public async Task<IActionResult> Index()
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
         {
-            try
-
+            var partner = await partnerService.GetPartnerByIdAsync(id);
+            if (partner == null)
             {
-                
-                var partners = await partnerService.FooterPartners();
-
-                
-                ViewData["Partners"] = partners;
-
-                return View();
+                return NotFound();
             }
-            catch (System.Exception ex)
 
+            var partnerViewModel = new PartnerViewModel
             {
+                Id = partner.Id,
+                Name = partner.Name,
+                Address = partner.Address,
+                ImageUrl = partner.ImageUrl,
+                Courses = partner.Courses.Select(c => c.Title).ToList(),
+                Saloons = partner.Saloons.Select(s => s.Name).ToList()
+            };
 
-               
-
-                return StatusCode(500, "Грешка при зареждане на партньорите");
-
-            }
+            return View(partnerViewModel);
         }
 
-
-        //public async Task<IActionResult> FooterPartners()
-        //{
-        //    var partners = await partnerService.FooterPartners();
-
-        //    return PartialView("_FooterPartners", partners);
-        //}
-
-
-
-
-
-        //public async Task<IActionResult> FooterPartners()
-        //{
-        //    var partners = await partnerService.FooterPartners();
-
-        //    if (!partners.Any())
-        //    {
-        //        Console.WriteLine("No partners available in the controller.");
-        //    }
-
-        //    return PartialView("_FooterPartners", partners);
-        //}
-
-
-
-        //public async Task<IActionResult> FooterPartners()
-        //{
-        //    var partners = await context.Partners
-        //        .Select(p => new PartnerViewModel
-        //        {
-        //            Name = p.Name,
-        //            ImageUrl = p.ImageUrl
-        //        })
-        //        .ToListAsync();
-
-        //    // Проверка дали партньорите са извлечени правилно
-        //    if (partners == null || !partners.Any())
-        //    {
-        //        Console.WriteLine("No partners found.");
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine($"Found {partners.Count} partner(s).");
-        //    }
-
-        //    return PartialView("_FooterPartners", partners);  // Уверете се, че изпращате партньорите на частичния изглед
-        //}
-
-
-
-
-
-
-        //[Httpget]
-        //[AllowAnonymous]
-        //public async Task<IActionResult> Footerpartners()
-        //{
-        //    var partners = await context.partners
-        //        .select(p => new partnerviewmodel
-        //        {
-        //            name = p.name,
-        //            imageurl = p.imageurl
-        //        })
-        //        .tolistasync();
-
-        //    return partialview("_footerpartners", partners);
-        //}
-
-
-
-
-
-
-
-
-
-        //[HttpGet]
-        //[AllowAnonymous]
-        //public async Task<IActionResult> FooterPartners()
-        //{
-        //    var partners = await context.Partners
-        //        .Select(p => new PartnerViewModel
-        //        {
-        //            Name = p.Name,
-        //            ImageUrl = p.ImageUrl
-        //        })
-        //        .ToListAsync();
-
-        //    // Логиране на партньорите, за да проверите дали се зареждат правилно
-        //    if (partners == null || !partners.Any())
-        //    {
-        //        // Можете да добавите логиране в конзолата или лог файл
-        //        Console.WriteLine("No partners found in the database.");
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine($"Found {partners.Count} partners.");
-        //    }
-
-        //    return PartialView("_FooterPartners", partners);
-        //}
     }
 
-    internal class HttpgetAttribute : Attribute
-    {
-    }
 }
