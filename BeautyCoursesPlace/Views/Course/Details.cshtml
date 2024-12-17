@@ -46,7 +46,7 @@
                             <input class="btn btn-primary" type="submit" value="Sign In" />
                         </form>
                     }
-                    else if (await courseService.HasLectorWithIdAsync(Model.Id, User.Id()) || User.IsAdmin())
+                    else if (User.IsAdmin()) //await courseService.HasLectorWithIdAsync(Model.Id, User.Id()) ||
                     {
                         <form class="ml-2" asp-controller="Course" asp-action="SignOut"
                               asp-route-id="@Model.Id" method="post">
